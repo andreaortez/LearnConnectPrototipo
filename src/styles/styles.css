@@ -1,3 +1,38 @@
+.background-image {
+    position: relative;
+    background-image: url('/images/Fondo1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+}
+
+.btn-verde {
+    background-color: #6AA87D !important;
+    color: white !important;
+    border: none !important;
+}
+
+.btn-verde:hover {
+    background-color: #4a7557 !important;
+    color: white !important;
+}
+
+.btn-outline1 {
+    outline: 1px solid #0f2225 !important;
+    color: #0f2225 !important;
+    border: none !important;
+}
+
+.btn-outline1:hover {
+    background-color: #0f2225 !important;
+    color: white !important;
+}
+
+
+
+
 .pageButton {
     background-color: #06b09a !important;
     color: white !important;
@@ -112,13 +147,7 @@
     width: 53%;
 }
 
-.background-image {
-    position: relative;
-    background-image: url('/imagenes/fondo2.jpg');
-    background-size: cover;
-    background-position: center;
-    width: 100%;
-}
+
 
 .overlay2 {
     position: relative;
@@ -174,19 +203,6 @@
 #contactTitle {
     padding-bottom: 2.5%;
     font-weight: 700;
-}
-
-#contactButton {
-    background-color: white;
-    color: #06b09a;
-    font-weight: 600;
-    gap: 10px;
-    display: flex;
-    align-items: center;
-}
-
-#contactButton:hover {
-    background-color: rgb(240, 240, 240);
 }
 
 .portadaUsuario {
@@ -271,62 +287,6 @@
 
 .nav-elements:hover #notificaciones {
     content: url(/imagenes/notificacion2.png)
-}
-
-.statistics {
-    position: absolute;
-    top: 25px;
-    left: 630px;
-    width: 350px;
-    height: 300px;
-}
-
-.graficas {
-    position: absolute;
-    top: 300px;
-}
-
-.graph-container {
-    border-radius: 5px;
-    background-color: white;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.linegraph {
-    top: 85px;
-    width: 550px;
-    height: 290px;
-    padding: 15px;
-    margin-top: 20px;
-}
-
-.selectbox {
-    width: 200px !important;
-}
-
-.piegraph {
-    width: 160px;
-    height: 160px;
-}
-
-.sectores {
-    position: relative;
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 10px;
-    margin-top: 30px;
-    width: 100%;
-}
-
-.sectores-graphs {
-    background: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    padding: 10px;
-    width: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .components {

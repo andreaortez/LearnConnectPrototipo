@@ -18,14 +18,14 @@ export default function LogIn() {
         axios.post('http://localhost:3001/IniciarSesion', { email, pass })
             .then(result => {
                 if (result.data.result === "Sesión Iniciada") {
-                    sessionStorage.setItem('user_id', result.data.user_id);
+                    localStorage.setItem('user_id', result.data.user_id);
 
                     if (result.data.pyme_id) {
-                        sessionStorage.setItem('tipo_id', result.data.pyme_id);
-                        sessionStorage.setItem('tipo', "Pyme");
+                        localStorage.setItem('tipo_id', result.data.pyme_id);
+                        localStorage.setItem('tipo', "Pyme");
                     } else {
-                        sessionStorage.setItem('tipo_id', result.data.inversionista_id);
-                        sessionStorage.setItem('tipo', "Inversionista");
+                        localStorage.setItem('tipo_id', result.data.inversionista_id);
+                        localStorage.setItem('tipo', "Inversionista");
                     }
 
                     router.push('/$YUPI');
