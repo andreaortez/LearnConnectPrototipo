@@ -16,7 +16,7 @@
     "bootstrap": "^5.3.3",
     "next": "15.1.6",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
@@ -24,7 +24,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "typescript": "^5"
+    "typescript": "^5",
     "@types/react-dom": "^19",
     "typescript": "^5"
   }
