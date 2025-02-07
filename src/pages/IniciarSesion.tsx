@@ -18,14 +18,14 @@ export default function LogIn() {
         axios.post('http://localhost:3001/IniciarSesion', { email, pass })
             .then(result => {
                 if (result.data.result === "Sesión Iniciada") {
-                    sessionStorage.setItem('user_id', result.data.user_id);
+                    localStorage.setItem('user_id', result.data.user_id);
 
                     if (result.data.pyme_id) {
-                        sessionStorage.setItem('tipo_id', result.data.pyme_id);
-                        sessionStorage.setItem('tipo', "Pyme");
+                        localStorage.setItem('tipo_id', result.data.pyme_id);
+                        localStorage.setItem('tipo', "Pyme");
                     } else {
-                        sessionStorage.setItem('tipo_id', result.data.inversionista_id);
-                        sessionStorage.setItem('tipo', "Inversionista");
+                        localStorage.setItem('tipo_id', result.data.inversionista_id);
+                        localStorage.setItem('tipo', "Inversionista");
                     }
 
                     router.push('/$YUPI');
@@ -49,14 +49,13 @@ export default function LogIn() {
                 {/* Flecha */}
                 <div className="back position-absolute top-0 end-0">
                     <Link href="/">
-                        <img src="imagenes/atras.png" alt="Regresar" width="25" height="25" />
+                        <img src="images/atras.png" alt="Regresar" width="25" height="25" />
                     </Link>
                 </div>
                 {/* Logo */}
-                <div id="logo" className="position-absolute top-0 start-0 d-flex align-items-center p-2">
-                    <img src="./imagenes/logo.png" alt="Logo" width="40" height="40" />
-                    <span className="navbar-brand mb-0 ms-2">$YUPI</span>
-                </div>
+                {/*<div id="logo" className="position-absolute top-0 start-0 d-flex align-items-center p-2">
+                    <img src="./images/Logo.png" alt="Logo" width="110" height="100" />
+                </div>*/}
 
                 <p className="LG_SUtitle text-center" >Iniciar Sesión</p>
                 <form onSubmit={handleSubmit}>
@@ -89,16 +88,16 @@ export default function LogIn() {
                         </div>
                     </div>
                     <div className="text-center">
-                        <button className="pageButton btn" type="submit">
+                        <button className="btn-outline2 btn" type="submit">
                             Iniciar Sesión
                         </button>
                     </div>
-                    <div className="alternativa">
+                    <div className="redireccionamiento">
                         <p>¿No tienes una cuenta? </p>
                         <Link href="/RegistroP" className="textColor"> Haz click aquí para registrarte como Pyme.</Link>
 
                     </div>
-                    <div className="alternativa mt-0">
+                    <div className="redireccionamiento mt-0">
                         <Link href="/RegistroI" className="textColor"> o haz click aquí para registrarte como Inversionista.</Link>
                     </div>
                 </form>
@@ -108,10 +107,10 @@ export default function LogIn() {
             < div className="image position-absolute top-0 end-0" >
                 <div className="overlay ovl2">
                     <p className="title2">Bienvenido a</p>
-                    <p className="title">$YUPI</p>
+                    <p className="title">LEARN CONNECT</p>
                     <p className="text">Inicia Sesión para acceder a tu cuenta.</p>
                 </div>
-                <img src="imagenes/FondoLI.png" alt="Iniciar Sesión" width="100%" height="630px" />
+                <img src="images/Fondo5.jpg" alt="Iniciar Sesión" width="100%" height="630px" />
             </div >
 
             {/* Modal */}
@@ -120,7 +119,7 @@ export default function LogIn() {
                 footer={
                     <button
                         type="button"
-                        className="btn btn-secondary pageButton"
+                        className="btn btn-secondary btn-outline2"
                         onClick={() => {
                             setShowModal(false);
                         }}
