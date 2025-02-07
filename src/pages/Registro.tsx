@@ -38,7 +38,7 @@ export default function SignUp() {
                     <p className="title">¿Eres nuevo aquí?</p>
                     <p className="text">¡Regístrate y descubre una gran cantidad de nuevas oportunidades!</p>
                 </div>
-                <img src="imagenes/FondoLI.png" alt="Iniciar Sesión" width="100%" height="630px" />
+                <img src="images/Fondo5.jpg" className="image" alt="Crear Cuenta" width="100%" height="630px" />
             </div>
 
             {/* Form */}
@@ -46,14 +46,14 @@ export default function SignUp() {
                 {/* Flecha */}
                 <div className="back position-absolute top-0 start-50 p-2">
                     <Link href="/">
-                        <img src="imagenes/atras.png" alt="Regresar" width="25" height="25" />
+                        <img src="images/atras.png" alt="Regresar" width="25" height="25" />
                     </Link>
                 </div>
                 {/* Logo */}
-                <div id="logo" className="position-absolute top-0 end-0 d-flex align-items-center">
-                    <img src="./imagenes/logo.png" alt="Logo" width="40" height="40" />
+                {/*<div id="logo" className="position-absolute top-0 end-0 d-flex align-items-center">
+                    <img src="./images/logo.png" alt="Logo" width="40" height="40" />
                     <span className="navbar-brand mb-0 ms-2">$YUPI</span>
-                </div>
+                </div>*/}
 
                 <p className="LG_SUtitle text-center">Crear Cuenta</p>
                 <form onSubmit={handleSubmit} className="center">
@@ -100,12 +100,12 @@ export default function SignUp() {
                         </div>
                     </div>
                     <div className="text-center">
-                        <button className="pageButton btn" type="submit">
+                        <button className="btn-outline2 btn" type="submit">
                             Registrarse
                         </button>
                     </div>
 
-                    <div className="alternativa">
+                    <div className="redireccionamiento">
                         <p>¿Ya tienes una cuenta? </p>
                         <Link href="/IniciarSesion" className="textColor"> Haz click aquí para iniciar sesión.</Link>
                     </div>
