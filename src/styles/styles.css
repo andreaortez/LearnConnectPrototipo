@@ -100,8 +100,8 @@
 }
 
 #logo span {
-    font-size: 25px;
-    font-weight: 400;
+    font-size: 200px;
+    font-weight: 800;
 }
 
 .back {
@@ -411,3 +411,32 @@
 .dropdown-item:hover {
     background-color: #f8f9fa;
 }
+
+.sidebar {
+    height: 100vh;     
+    position: sticky;   
+    top: 0;       
+  }
+  
+  #sidebarMenu {
+    background-color: #f7f7f7; 
+    text-align: left;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: large;
+    align-items: center;
+    padding: 12px;
+  }
+  #sidebarMenu button {
+    padding: 20px;
+    align-self: flex-end;
+  }
+  #landing {
+    background-color: #9ccc9e;
+    height: 300px;
+    text-align: center;
+    justify-items: center;
+  }
+  #home-header {
+    background-color: #f7f7f7 50%;
+  }
+  

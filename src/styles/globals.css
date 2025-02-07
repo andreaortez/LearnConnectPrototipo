@@ -39,4 +39,16 @@ a {
   html {
     color-scheme: dark;
   }
+
+  @media (min-width: 768px) {
+    #mainContent {
+      margin-left: 25%; 
+    }
+    #sidebarMenu {
+      position: fixed !important;
+      transform: none !important;
+      visibility: visible !important;
+    }
+  }
+  
 }
