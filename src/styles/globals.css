@@ -39,16 +39,33 @@ a {
   html {
     color-scheme: dark;
   }
-
-  @media (min-width: 768px) {
-    #mainContent {
-      margin-left: 25%; 
-    }
-    #sidebarMenu {
-      position: fixed !important;
-      transform: none !important;
-      visibility: visible !important;
-    }
-  }
   
 }
+
+
+@media (min-width: 768px) {
+  #main {
+    padding:1%; 
+    width: 65%;  
+  }
+  #sidebarMenu {
+    width: 35%;
+    position: fixed !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
+}
+@media (min-width: 1024px) {
+  #main {
+
+    margin-left: 25% !important;
+    width: 75%; 
+  }
+  #sidebarMenu {
+    width: 35%;
+    position: fixed !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
+}
+

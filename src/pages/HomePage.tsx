@@ -2,7 +2,6 @@ import Link from "next/link";
 import { useEffect } from "react";
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import Modal from './modals/modal'
 import SideBar from "./modals/SideBar";
 
 export default function HomePage (){
@@ -15,13 +14,13 @@ export default function HomePage (){
       }, []);
       
     return (
-        <div className="container-fluid">
+        <div className="container-fluid ">
 
-        <div className="column">
+        <div className="row ">
             <aside className="col-md-3 col-lg-3 sticky-top">
                 <SideBar />
             </aside>   
-            <main className="col-md-6 ms-sm-auto col-lg-9 px-md-4">
+            <main id="main" className="col-md-9 ms-sm-auto col-lg-9 px-md-4">
                 <nav id="home-header" className="navbar navbar-light bg-light d-md-none">
                     <div className="container-fluid">
                         <button className="navbar-toggler"
@@ -40,7 +39,7 @@ export default function HomePage (){
                     <section id="landing" className="pt-3">
                         <h2>Bienvenido a LearnConnect</h2>
                     </section>
-                    <section id="Actividades" className="pt-3">
+                    <section id="actividades" className="pt-3">
                         <h2>Actividades</h2>
                         <p>Sube tus archivos o anotaciones para estudiar con nuestros juegos, examenes y flashcards
                             generadas con IA!

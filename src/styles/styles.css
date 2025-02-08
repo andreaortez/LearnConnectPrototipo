@@ -96,8 +96,6 @@
 
 
 
-
-
 .title {
     font-size: 50px;
     font-weight: bold;
@@ -120,9 +118,6 @@
 .ovl2 {
     background: rgba(0, 0, 0, 0.1);
 }
-
-
-
 
 
 #logo {
@@ -378,13 +373,14 @@
     top: 0;       
   }
   
-  #sidebarMenu {
+  #sidebarMenu { 
     background-color: #f7f7f7; 
     text-align: left;
     font-family: 'Courier New', Courier, monospace;
     font-size: large;
     align-items: center;
     padding: 12px;
+    max-width: 360px;
   }
   #sidebarMenu button {
     padding: 20px;
@@ -396,7 +392,15 @@
     text-align: center;
     justify-items: center;
   }
-  #home-header {
-    background-color: #f7f7f7 50%;
+  #actividades {
+    background-color:rgba(158,204,158,255);
+    height: 300px;
+    text-align: center;
+    justify-items: center;
   }
+
+/*   #main {
+    display: flex-column;
+    height: fullscreen;  
+  } */
   
