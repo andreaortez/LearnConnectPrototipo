@@ -14,6 +14,7 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  
 }
 
 body {
@@ -42,11 +43,11 @@ a {
   
 }
 
-
 @media (min-width: 768px) {
   #main {
-    padding:1%; 
-    width: 65%;  
+    margin-left: 33% !important;
+    padding:0.5%; 
+    width: 70%;  
   }
   #sidebarMenu {
     width: 35%;
@@ -58,8 +59,34 @@ a {
 @media (min-width: 1024px) {
   #main {
 
+    margin-left: 33% !important;
+    width: 69%; 
+  }
+  #sidebarMenu {
+    width: 35%;
+    position: fixed !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
+}
+@media (min-width: 1124px) {
+  #main {
+
     margin-left: 25% !important;
-    width: 75%; 
+    width: 77%; 
+  }
+  #sidebarMenu {
+    width: 35%;
+    position: fixed !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
+}
+@media (min-width: 1424px) {
+  #main {
+
+    margin-left: 10% !important;
+    width: 100%; 
   }
   #sidebarMenu {
     width: 35%;

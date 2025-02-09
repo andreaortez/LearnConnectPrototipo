@@ -1,11 +1,20 @@
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect,useState} from "react";
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import SideBar from "./modals/SideBar";
 
+type OptionKeys = "flashcards" | "resumen" | "examenPractica";
+
+interface OptionsState {
+  flashcards: boolean;
+  resumen: boolean;
+  examenPractica: boolean;
+}
+
 export default function HomePage (){
     const router = useRouter();
+    const [showOptions, setShowOptions] = useState(false);
     useEffect(() => {
         const initBootstrap = async () => {
           await import('bootstrap');
@@ -13,6 +22,23 @@ export default function HomePage (){
         initBootstrap();
       }, []);
       
+      const [selectedOptions, setSelectedOptions] = useState<OptionsState>({
+        flashcards: false,
+        resumen: false,
+        examenPractica: false,
+      });
+    
+      const toggleOption = (option: OptionKeys) => {
+        setSelectedOptions((prev) => ({
+          ...prev,
+          [option]: !prev[option],
+        }));
+      };
+
+      const handleButtonClick = () => {
+        setShowOptions(true);
+      };
+    
     return (
         <div className="container-fluid ">
 
@@ -33,17 +59,50 @@ export default function HomePage (){
                             >
                             <span className="navbar-toggler-icon"></span>
                         </button>
-                    <span className="navbar-brand mb-0 h1">Homepage</span>
+                    <span className="navbar-brand mb-0 h1 ibm-plex-sans-pSans">Homepage</span>
                     </div>
                 </nav>   
-                    <section id="landing" className="pt-3">
-                        <h2>Bienvenido a LearnConnect</h2>
+                    <section id="landing" className="pt-3 ibm-plex-sans-pSans"
+                    style={{ 
+                        backgroundImage: 'url("/images/banner.png")', 
+                        backgroundSize: 'cover', 
+                        backgroundRepeat: 'no-repeat',
+                        backgroundPosition: 'center',
+                        minHeight: '300px' 
+                      }}
+                    >
+                        <h1>Bienvenido a LearnConnect</h1>
                     </section>
-                    <section id="actividades" className="pt-3">
+                    <section id="actividades" className="pt-6 ibm-plex-sans-pSans">
                         <h2>Actividades</h2>
-                        <p>Sube tus archivos o anotaciones para estudiar con nuestros juegos, examenes y flashcards
+                        <p className="">Sube tus archivos o anotaciones para estudiar con nuestros juegos, examenes y flashcards
                             generadas con IA!
                         </p>
+                        <button className="btn btn-act" onClick={handleButtonClick}>Subir anotaciones</button>
+                        {showOptions && (
+                            <div id="btngroup1" className="fade-in m-3 ">  
+                                <h5>Generar:</h5>                     
+                                <button
+                                    className={`btn btn-tipo m-2 ${selectedOptions.flashcards ? "btn-selected" : ""}`}
+                                    onClick={() => toggleOption("flashcards")}
+                                >
+                                    Flashcards
+                                </button>
+                                <button
+                                    className={`btn btn-tipo m-2 ${selectedOptions.resumen ? "btn-selected" : ""}`}
+                                    onClick={() => toggleOption("resumen")}
+                                >
+                                    Resumen
+                                </button>
+                                <button
+                                    className={`btn btn-tipo m-2 ${selectedOptions.examenPractica ? "btn-selected" : ""}`}
+                                    onClick={() => toggleOption("examenPractica")}
+                                >
+                                    Examen de Practica
+                                </button>
+                            </div>
+                          )}
+                                               
                     </section>
                     
                 

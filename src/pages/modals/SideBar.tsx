@@ -18,10 +18,10 @@ const Sidebar: React.FC = () => {
         <div className="offcanvas-header">
           <div className="d-flex w-100">    
           <Image 
-              src="/assets/logo.png" 
+              src="/images/Logo.png" 
               alt="Logo" 
               width={250} 
-              height={250} 
+              height={225} 
               priority 
             />
           </div>        
