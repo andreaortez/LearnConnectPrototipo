@@ -31,6 +31,7 @@ export default function HomePage (){
           ...prev,
           [option]: !prev[option],
         }));
+        console.log(selectedOptions);
       };
 
       const handleButtonClick = () => {
@@ -80,40 +81,24 @@ export default function HomePage (){
                         {showOptions && (
                             <div id="btngroup1" className="fade-in m-3 ">  
                                 <h5>Generar:</h5>                     
-                                <div className="btn-group" role="group" aria-label="Checkbox toggle button group">
-                                <input
-                                    type="checkbox"
-                                    className="btn-check"
-                                    id="btn-flashcards"
-                                    checked={selectedOptions.flashcards}
-                                    onChange={() => toggleOption("flashcards")}
-                                />
-                                <label className="btn btn-outline-primary" htmlFor="btn-flashcards">
+                                <button
+                                    className={`btn btn-tipo m-2 ${selectedOptions.flashcards ? "btn-selected" : "btn-tipo"}`}
+                                    onClick={() => toggleOption("flashcards")}
+                                >
                                     Flashcards
-                                </label>
-
-                                <input
-                                    type="checkbox"
-                                    className="btn-check"
-                                    id="btn-resumen"
-                                    checked={selectedOptions.resumen}
-                                    onChange={() => toggleOption("resumen")}
-                                />
-                                <label className="btn btn-outline-primary" htmlFor="btn-resumen">
+                                </button>
+                                <button
+                                    className={`btn btn-tipo m-2 ${selectedOptions.resumen ? "btn-selected" : "btn-tipo"}`}
+                                    onClick={() => toggleOption("resumen")}
+                                >
                                     Resumen
-                                </label>
-
-                                <input
-                                    type="checkbox"
-                                    className="btn-check"
-                                    id="btn-examenPractica"
-                                    checked={selectedOptions.examenPractica}
-                                    onChange={() => toggleOption("examenPractica")}
-                                />
-                                <label className="btn btn-outline-primary" htmlFor="btn-examenPractica">
+                                </button>
+                                <button
+                                    className={`btn btn-tipo m-2 ${selectedOptions.examenPractica ? "btn-selected" : "btn-tipo"}`}
+                                    onClick={() => toggleOption("examenPractica")}
+                                >
                                     Examen de Practica
-                                </label>
-                                </div>
+                                </button>
                             </div>
                           )}
                                                

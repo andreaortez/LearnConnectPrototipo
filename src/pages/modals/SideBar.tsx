@@ -26,7 +26,7 @@ const Sidebar: React.FC = () => {
             />
           </div>        
         </div>
-        <div className="offcanvas-body">
+        <div className="offcanvas-body ">
           <ul className="nav flex-column">
             <li className="nav-item">
               <a className="nav-link text-dark" href="#landing">Inicio</a>
@@ -41,7 +41,7 @@ const Sidebar: React.FC = () => {
               <a className="nav-link text-dark" href="#recursos">Recursos</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link text-dark" href="/other-page.html">Other Page</a>
+              <a className="nav-link text-dark" href="#soporte">Soporte</a>
             </li>
           </ul>
         </div>
