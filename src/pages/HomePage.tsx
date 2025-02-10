@@ -1,6 +1,4 @@
-import Link from "next/link";
 import { useEffect,useState} from "react";
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import SideBar from "./modals/SideBar";
 
@@ -15,19 +13,19 @@ interface OptionsState {
 export default function HomePage (){
     const router = useRouter();
     const [showOptions, setShowOptions] = useState(false);
-    useEffect(() => {
+     const [selectedOptions, setSelectedOptions] = useState<OptionsState>({
+        flashcards: false,
+        resumen: false,
+        examenPractica: false,
+      });
+      
+      useEffect(() => {
         const initBootstrap = async () => {
           await import('bootstrap');
         };
         initBootstrap();
       }, []);
       
-      const [selectedOptions, setSelectedOptions] = useState<OptionsState>({
-        flashcards: false,
-        resumen: false,
-        examenPractica: false,
-      });
-    
       const toggleOption = (option: OptionKeys) => {
         setSelectedOptions((prev) => ({
           ...prev,
@@ -82,24 +80,40 @@ export default function HomePage (){
                         {showOptions && (
                             <div id="btngroup1" className="fade-in m-3 ">  
                                 <h5>Generar:</h5>                     
-                                <button
-                                    className={`btn btn-tipo m-2 ${selectedOptions.flashcards ? "btn-selected" : ""}`}
-                                    onClick={() => toggleOption("flashcards")}
-                                >
+                                <div className="btn-group" role="group" aria-label="Checkbox toggle button group">
+                                <input
+                                    type="checkbox"
+                                    className="btn-check"
+                                    id="btn-flashcards"
+                                    checked={selectedOptions.flashcards}
+                                    onChange={() => toggleOption("flashcards")}
+                                />
+                                <label className="btn btn-outline-primary" htmlFor="btn-flashcards">
                                     Flashcards
-                                </button>
-                                <button
-                                    className={`btn btn-tipo m-2 ${selectedOptions.resumen ? "btn-selected" : ""}`}
-                                    onClick={() => toggleOption("resumen")}
-                                >
+                                </label>
+
+                                <input
+                                    type="checkbox"
+                                    className="btn-check"
+                                    id="btn-resumen"
+                                    checked={selectedOptions.resumen}
+                                    onChange={() => toggleOption("resumen")}
+                                />
+                                <label className="btn btn-outline-primary" htmlFor="btn-resumen">
                                     Resumen
-                                </button>
-                                <button
-                                    className={`btn btn-tipo m-2 ${selectedOptions.examenPractica ? "btn-selected" : ""}`}
-                                    onClick={() => toggleOption("examenPractica")}
-                                >
+                                </label>
+
+                                <input
+                                    type="checkbox"
+                                    className="btn-check"
+                                    id="btn-examenPractica"
+                                    checked={selectedOptions.examenPractica}
+                                    onChange={() => toggleOption("examenPractica")}
+                                />
+                                <label className="btn btn-outline-primary" htmlFor="btn-examenPractica">
                                     Examen de Practica
-                                </button>
+                                </label>
+                                </div>
                             </div>
                           )}
                                                

@@ -398,7 +398,8 @@
   }
   #actividades {
     /* background-color:rgba(158,204,158,255); */
-    background-color:#8bc99b ;
+    /* background-color:#8bc99b ; */
+    background: linear-gradient(to bottom,#8bc99b,#47d2a6 );
     height: 60vh;
     text-align: center;
     justify-items: center;
@@ -457,6 +458,19 @@
     background-color: #a54480 !important;
     color: white !important;
 }
+.btn-outline-primary {
+    background-color: #c46aa2 !important;
+    color: #f6dbef !important;
+    border: none !important;
+    margin: 20px;
+    padding: 10px 20px;
+  }
+  
+  .btn-outline-primary:hover {
+    background-color: #a54480 !important;
+    color: white !important;
+  }
+  
 .pt-sans-regular {
     font-family: "PT Sans", serif;
     font-weight: 400;
