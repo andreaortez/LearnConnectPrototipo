@@ -28,104 +28,105 @@ export default function LogIn() {
                         localStorage.setItem('tipo', "Inversionista");
                     }
 
-                    router.push('/$YUPI');
+                    router.push('/HomePage');
                 } else {
+
                     setTitle("¡Error!");
                     setMessage("Correo y/o contraseña incorrecta.");
                     setShowModal(true);
                 }
             })
             .catch(() => {
-                setTitle("¡Error!");
+                router.push('/HomePage');
+                {/*setTitle("¡Error!");
                 setMessage("No se pudo conectar con el servidor. Intenta nuevamente más tarde.");
-                setShowModal(true);
+                setShowModal(true);*/}
             });
     };
 
     return (
         <>
-            {/* Form */}
-            <div className="LG_SU-background float-start" style={{ paddingTop: '90px' }}>
-                {/* Flecha */}
-                <div className="back position-absolute top-0 end-0">
-                    <Link href="/">
-                        <img src="images/atras.png" alt="Regresar" width="25" height="25" />
-                    </Link>
-                </div>
-                {/* Logo */}
-                {/*<div id="logo" className="position-absolute top-0 start-0 d-flex align-items-center p-2">
-                    <img src="./images/Logo.png" alt="Logo" width="110" height="100" />
-                </div>*/}
+            <div className="container-grid">
+                {/* Form */}
+                <div className="form-section">
+                    {/* Flecha */}
+                    <div className="back position-absolute top-0 end-0 p-2">
+                        <Link href="/">
+                            <img src="images/atras.png" alt="Regresar" width="25" height="25" />
+                        </Link>
+                    </div>
 
-                <p className="LG_SUtitle text-center" >Iniciar Sesión</p>
-                <form onSubmit={handleSubmit}>
-                    <div className="row mb-3">
-                        <label htmlFor="inputEmail3" className="col-sm-3 col-form-label">
-                            Correo Electrónico
-                        </label>
-                        <div className="col-sm-9">
-                            <input
-                                type="email"
-                                className="form-control"
-                                id="inputEmail3"
-                                onChange={(input) => setEmail(input.target.value)}
-                                required
-                            />
+                    <p className="LG_SUtitle text-center" >Iniciar Sesión</p>
+                    <form onSubmit={handleSubmit}>
+                        <div className="row mb-3">
+                            <label htmlFor="inputEmail3" className="col-sm-3 col-form-label">
+                                Correo Electrónico
+                            </label>
+                            <div className="col-sm-9">
+                                <input
+                                    type="email"
+                                    className="form-control"
+                                    id="inputEmail3"
+                                    onChange={(input) => setEmail(input.target.value)}
+                                    required
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <div className="row mb-4">
-                        <label htmlFor="inputPassword3" className="col-sm-3 col-form-label">
-                            Contraseña
-                        </label>
-                        <div className="col-sm-9">
-                            <input
-                                type="password"
-                                className="form-control"
-                                id="inputPassword3"
-                                onChange={(input) => setPass(input.target.value)}
-                                required
-                            />
+                        <div className="row mb-4">
+                            <label htmlFor="inputPassword3" className="col-sm-3 col-form-label">
+                                Contraseña
+                            </label>
+                            <div className="col-sm-9">
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    id="inputPassword3"
+                                    onChange={(input) => setPass(input.target.value)}
+                                    required
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <div className="text-center">
-                        <button className="btn-outline2 btn" type="submit">
-                            Iniciar Sesión
-                        </button>
-                    </div>
-                    <div className="redireccionamiento">
-                        <p>¿No tienes una cuenta? </p>
-                        <Link href="/RegistroP" className="textColor"> Haz click aquí para registrarte como Pyme.</Link>
+                        <div className="text-center">
+                            <button className="btn-outline2 btn" type="submit">
+                                Iniciar Sesión
+                            </button>
+                        </div>
+                        <div className="redireccionamiento">
+                            <p>¿No tienes una cuenta? </p>
+                            <Link href="/Registro" className="textColor"> Haz click aquí para registrarte como Pyme.</Link>
 
-                    </div>
-                    <div className="redireccionamiento mt-0">
-                        <Link href="/RegistroI" className="textColor"> o haz click aquí para registrarte como Inversionista.</Link>
-                    </div>
-                </form>
+                        </div>
+                        <div className="redireccionamiento mt-0">
+                            <Link href="/Registro" className="textColor"> o haz click aquí para registrarte como Inversionista.</Link>
+                        </div>
+                    </form>
 
-            </div >
-            {/* Imagen */}
-            < div className="image position-absolute top-0 end-0" >
-                <div className="overlay ovl2">
-                    <p className="title2">Bienvenido a</p>
-                    <p className="title">LEARN CONNECT</p>
-                    <p className="text">Inicia Sesión para acceder a tu cuenta.</p>
-                </div>
-                <img src="images/Fondo5.jpg" alt="Iniciar Sesión" width="100%" height="630px" />
-            </div >
+                </div >
 
-            {/* Modal */}
-            {showModal && <Modal title={title} message={message}
-                onClose={() => setShowModal(false)}
-                footer={
-                    <button
-                        type="button"
-                        className="btn btn-secondary btn-outline2"
-                        onClick={() => {
-                            setShowModal(false);
-                        }}
-                    >
-                        Cerrar
-                    </button>} />}
+                {/* Imagen */}
+                < div className="image" >
+                    <div className="overlay ovl2">
+                        <p className="title2">Bienvenido a</p>
+                        <p className="title">LEARN CONNECT</p>
+                        <p className="text">Inicia Sesión para acceder a tu cuenta.</p>
+                    </div>
+                    <img src="images/Fondo5.jpg" alt="Iniciar Sesión" width="100%" height="100%" />
+                </div >
+
+                {/* Modal */}
+                {showModal && <Modal title={title} message={message}
+                    onClose={() => setShowModal(false)}
+                    footer={
+                        <button
+                            type="button"
+                            className="btn btn-secondary btn-outline2"
+                            onClick={() => {
+                                setShowModal(false);
+                            }}
+                        >
+                            Cerrar
+                        </button>} />}
+            </div>
         </>
     );
 };
