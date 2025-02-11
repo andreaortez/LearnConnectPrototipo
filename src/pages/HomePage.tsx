@@ -99,6 +99,12 @@ export default function HomePage (){
                                 >
                                     Examen de Practica
                                 </button>
+                                <div></div>
+                                {(selectedOptions.flashcards || selectedOptions.resumen || selectedOptions.examenPractica) && (
+                                    <button className="btn btn-act mt-4" onClick={() => router.push("/subir-recursos")}>
+                                        Continuar  →
+                                    </button>
+                                )}
                             </div>
                           )}
                                                

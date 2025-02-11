@@ -400,7 +400,7 @@
     /* background-color:rgba(158,204,158,255); */
     /* background-color:#8bc99b ; */
     background: linear-gradient(to bottom,#8bc99b,#47d2a6 );
-    height: 60vh;
+    height: 70vh;
     text-align: center;
     justify-items: center;
     align-content: center;
@@ -431,11 +431,6 @@
     align-content: center;
 
   }
-  .btn-tipo.btn-selected {
-    background-color: #9f4e78 !important; /* Use !important if necessary */
-    color: white;
-    border: 2px solid white;
-  }
 
   .btn-act {
     background-color: #e6ffeee0 !important;
@@ -452,15 +447,26 @@
 .btn-tipo {
     height: 50px;
     width: 220px;
-    background-color: #c46aa2 !important;
-    color: #f6dbef !important;
+    color: #4a7557 !important ;
+    background-color: none !important;
+    color: #4a7567 ;
+    border: 2px solid rgb(255, 255, 255) !important;
+    border-style:groove ;
+    /* background-color: #c46aa2 !important;
+    color: #f6dbef !important; */
+}
+.btn-tipo.btn-selected {
+    /* background-color: #9f4e78 !important;  */
+    background-color: #e6ffeee0 !important;
+    color: #4a7557;
+    border: none !important;
+  }
+.btn-tipo:hover {
+    background-color: #e6ffeee0 !important;
+    color: #47d2a6 !important;
     border: none !important;
 }
 
-.btn-tipo:hover {
-    background-color: #a54480 !important;
-    color: white !important;
-}
 
 .pt-sans-regular {
     font-family: "PT Sans", serif;
