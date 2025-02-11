@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 .background-image {
     position: relative;
     background-image: url('/images/Fondo1.jpg');
@@ -94,10 +95,6 @@
     padding-top: 66px;
 }
 
-
-
-
-
 .title {
     font-size: 50px;
     font-weight: bold;
@@ -113,16 +110,9 @@
     font-weight: 200;
 }
 
-
-
-
-
 .ovl2 {
     background: rgba(0, 0, 0, 0.1);
 }
-
-
-
 
 
 #logo {
@@ -135,8 +125,8 @@
 }
 
 #logo span {
-    font-size: 25px;
-    font-weight: 400;
+    font-size: 200px;
+    font-weight: 800;
 }
 
 .back {
@@ -146,8 +136,6 @@
     display: flex;
     width: 53%;
 }
-
-
 
 .overlay2 {
     position: relative;
@@ -371,3 +359,127 @@
 .dropdown-item:hover {
     background-color: #f8f9fa;
 }
+
+.sidebar {
+    height: 100vh;     
+    position: sticky;   
+    top: 0;       
+  }
+  
+  #sidebarMenu { 
+    background-color: #ffffff; 
+    text-align: left;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: large;
+    align-items: center;
+    padding: 12px;
+    max-width: 360px;
+    position: fixed;
+  }
+  #sidebarMenu button {
+    padding: 20px;
+    align-self: flex-end;
+   
+  } #main{
+    }
+
+  #landing {
+    padding: 5%;
+    background-color: #9ccc9e;
+    height: 40vh;
+    text-align: center;
+    justify-items: center;
+    align-content: center;
+    text-shadow: #0f2225;
+    font-style: bold;
+    color: white;
+    font-size: 60px;
+    margin: 0 auto;
+  }
+  #actividades {
+    /* background-color:rgba(158,204,158,255); */
+    /* background-color:#8bc99b ; */
+    background: linear-gradient(to bottom,#8bc99b,#47d2a6 );
+    height: 70vh;
+    text-align: center;
+    justify-items: center;
+    align-content: center;
+    padding: 5%;
+    font-size: large;
+    color: white;
+  }
+  #actividades p {
+   
+  }
+
+  @keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  #btngroup {
+    text-align: center;
+    justify-items: center;
+    align-content: center;
+
+  }
+
+  .btn-act {
+    background-color: #e6ffeee0 !important;
+    color: #4a7557 !important;
+    border: none !important;
+    padding: 10px 30px !important;
+    margin: 5px;
+}
+
+.btn-act:hover {
+    background-color: #4a7557 !important;
+    color: white !important;
+}
+.btn-tipo {
+    height: 50px;
+    width: 220px;
+    color: #4a7557 !important ;
+    background-color: none !important;
+    color: #4a7567 ;
+    border: 2px solid rgb(255, 255, 255) !important;
+    border-style:groove ;
+    /* background-color: #c46aa2 !important;
+    color: #f6dbef !important; */
+}
+.btn-tipo.btn-selected {
+    /* background-color: #9f4e78 !important;  */
+    background-color: #e6ffeee0 !important;
+    color: #4a7557;
+    border: none !important;
+  }
+.btn-tipo:hover {
+    background-color: #e6ffeee0 !important;
+    color: #47d2a6 !important;
+    border: none !important;
+}
+
+
+.pt-sans-regular {
+    font-family: "PT Sans", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+.ibm-plex-sans-pSans {
+    font-family: "IBM Plex Sans", serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
+  }
+  
