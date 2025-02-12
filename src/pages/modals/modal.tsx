@@ -5,9 +5,10 @@ interface ModalParams {
     message: string;
     onClose: () => void;
     footer?: React.ReactNode;
+    children?: React.ReactNode;
 }
 
-export default function Modal({ title, message, onClose, footer }: ModalParams) {
+export default function Modal({ title, message, onClose, footer, children }: ModalParams) {
     return (
         <div className="modal show d-block" tabIndex={-1}>
             <div className="modal-dialog modal-dialog-centered">
