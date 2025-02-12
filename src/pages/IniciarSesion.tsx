@@ -17,7 +17,7 @@ export default function LogIn() {
         e.preventDefault();
         axios.post('http://localhost:3001/IniciarSesion', { email, pass })
             .then(result => {
-                if (result.data.result === "Sesión Iniciada") {
+                if (result.data.message === "Sesión iniciada con éxito") {
                     localStorage.setItem('user_id', result.data.user_id);
                     router.push('/HomePage');
                 } else {
@@ -26,10 +26,24 @@ export default function LogIn() {
                     setShowModal(true);
                 }
             })
-            .catch(() => {
-                setTitle("¡Error!");
-                setMessage("No se pudo conectar con el servidor. Intenta nuevamente más tarde.");
-                setShowModal(true);
+            .catch((error) => {
+                switch (error.response.data.error) {
+                    case "Llene todos los campos de usuario.":
+                        setTitle("¡Error!");
+                        setMessage("Llene todos los campos del usuario.");
+                        setShowModal(true);
+                        break;
+                    case "Usuario no encontrado en MongoDB":
+                        setTitle("¡Error!");
+                        setMessage("Correo y/o contraseña incorrectos.");
+                        setShowModal(true);
+                        break;
+                    default:
+                        setTitle("¡Error!");
+                        setMessage("Error al iniciar sesión. Intenta nuevamente.");
+                        setShowModal(true);
+                        break;
+                }
             });
     };
 

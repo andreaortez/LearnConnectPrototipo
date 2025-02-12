@@ -20,17 +20,45 @@ export default function SignUp() {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
         axios.post('http://localhost:3001/Registrarse', { email: correo, pass: contraseña, nombre, apellido, edad })
-            .then(result => {
-                if (result.data.result === "success") {
-                    localStorage.setItem('user_id', result.data.user_id);
+            .then(response => {
+                if (response.data.mensaje === `Usuario "${nombre} ${apellido}" registrado con éxito`) {
+                    localStorage.setItem('user_id', response.data.user_id);
                     router.push('/HomePage');
                 }
             })
             .catch((error) => {
-                console.log(error)
-                setTitle("¡Error!");
-                setMessage("Error al registrarse. Intente de nuevo.");
-                setShowModal(true);
+                switch (error.response.data.mensaje) {
+                    case "El correo ya está registrado.":
+                        setTitle("¡Error!");
+                        setMessage("El correo ya está registrado.");
+                        setShowModal(true);
+                        break;
+                    case "Formato de correo no válido.":
+                        setTitle("¡Error!");
+                        setMessage("El formato del correo no es válido.");
+                        setShowModal(true);
+                        break;
+                    case "La contraseña debe tener al menos 6 caracteres.":
+                        setTitle("¡Error!");
+                        setMessage("La contraseña debe tener al menos 6 caracteres.");
+                        setShowModal(true);
+                        break;
+                    case "❌ Error al registrar usuario en Mongo.":
+                        setTitle("¡Error!");
+                        setMessage("Ocurrió un error al registrar el usuario. Intente de nuevo.");
+                        setShowModal(true);
+                        break;
+                    case "El usuario ya existe en MongoDB":
+                        setTitle("¡Error!");
+                        setMessage("El usuario ya está registrado en nuestra base de datos. Intente iniciar sesión o use otro correo electrónico.");
+                        setShowModal(true);
+                        break;
+                    default:
+                        console.log(error.response.data.mensaje)
+                        setTitle("¡Error!");
+                        setMessage("Error al registrarse. Intente de nuevo.");
+                        setShowModal(true);
+                }
             });
     };
     return (
