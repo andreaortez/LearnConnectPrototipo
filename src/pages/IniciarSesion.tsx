@@ -19,28 +19,17 @@ export default function LogIn() {
             .then(result => {
                 if (result.data.result === "Sesión Iniciada") {
                     localStorage.setItem('user_id', result.data.user_id);
-
-                    if (result.data.pyme_id) {
-                        localStorage.setItem('tipo_id', result.data.pyme_id);
-                        localStorage.setItem('tipo', "Pyme");
-                    } else {
-                        localStorage.setItem('tipo_id', result.data.inversionista_id);
-                        localStorage.setItem('tipo', "Inversionista");
-                    }
-
                     router.push('/HomePage');
                 } else {
-
                     setTitle("¡Error!");
                     setMessage("Correo y/o contraseña incorrecta.");
                     setShowModal(true);
                 }
             })
             .catch(() => {
-                router.push('/HomePage');
-                {/*setTitle("¡Error!");
+                setTitle("¡Error!");
                 setMessage("No se pudo conectar con el servidor. Intenta nuevamente más tarde.");
-                setShowModal(true);*/}
+                setShowModal(true);
             });
     };
 
@@ -93,11 +82,8 @@ export default function LogIn() {
                         </div>
                         <div className="redireccionamiento">
                             <p>¿No tienes una cuenta? </p>
-                            <Link href="/Registro" className="textColor"> Haz click aquí para registrarte como Pyme.</Link>
+                            <Link href="/Registro" className="textColor"> Haz click aquí para registrarte.</Link>
 
-                        </div>
-                        <div className="redireccionamiento mt-0">
-                            <Link href="/Registro" className="textColor"> o haz click aquí para registrarte como Inversionista.</Link>
                         </div>
                     </form>
 

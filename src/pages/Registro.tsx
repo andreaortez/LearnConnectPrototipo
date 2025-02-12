@@ -2,32 +2,35 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import Modal from './modals/modal'
 
 export default function SignUp() {
     const router = useRouter();
-    const tipo = "Inversionista";
     //User Data
     const [correo, setCorreo] = useState<string>();
     const [contraseña, setContraseña] = useState<string>();
     const [nombre, setNombre] = useState<string>();
     const [apellido, setApellido] = useState<string>();
-    const [telefono, setTelefono] = useState<string>();
-    const [monto, setMonto] = useState<string>();
+    const [edad, setEdad] = useState<string>();
+
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const [title, setTitle] = useState<string>('');
+    const [message, setMessage] = useState<string>('');
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        axios.post('http://localhost:3001/Registrarse', { nombre, apellido, correo, contraseña, telefono, monto, tipo })
+        axios.post('http://localhost:3001/Registrarse', { email: correo, pass: contraseña, nombre, apellido, edad })
             .then(result => {
                 if (result.data.result === "success") {
-                    sessionStorage.setItem('user_id', result.data.user_id);
-                    sessionStorage.setItem('tipo_id', result.data.pyme_id || result.data.inversionista_id)
-                    e.preventDefault();
-                    window.location.href = "/IniciarSesion";
-                    router.push('/IniciarSesion');
+                    localStorage.setItem('user_id', result.data.user_id);
+                    router.push('/HomePage');
                 }
             })
             .catch((error) => {
                 console.log(error)
+                setTitle("¡Error!");
+                setMessage("Error al registrarse. Intente de nuevo.");
+                setShowModal(true);
             });
     };
     return (
@@ -51,11 +54,6 @@ export default function SignUp() {
                                 <img src="images/atras.png" alt="Regresar" width="25" height="25" />
                             </Link>
                         </div>
-                        {/* Logo */}
-                        {/*<div id="logo" className="position-absolute top-0 end-0 d-flex align-items-center">
-                    <img src="./images/logo.png" alt="Logo" width="40" height="40" />
-                    <span className="navbar-brand mb-0 ms-2">$YUPI</span>
-                </div>*/}
 
                         <p className="LG_SUtitle text-center">Crear Cuenta</p>
                         <form onSubmit={handleSubmit} className="center p-4">
@@ -81,24 +79,18 @@ export default function SignUp() {
                                         type="email" className="form-control" aria-label="Correo" required />
                                 </div>
                                 <div className="col-6 mb-3">
-                                    <label htmlFor="Numero" className="form-label">Número de teléfono</label>
-                                    <input
-                                        onChange={(input) => setTelefono(input.target.value)}
-                                        type="text" className="form-control" aria-label="Numero" required />
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-6 mb-3">
                                     <label htmlFor="Contraseña" className="form-label">Contraseña</label>
                                     <input
                                         onChange={(input) => setContraseña(input.target.value)}
                                         type="password" className="form-control" aria-label="Contraseña" required />
                                 </div>
-                                <div className="col-6 mb-3">
-                                    <label htmlFor="monto" className="form-label">Monto en bolsa</label>
+                            </div>
+                            <div className="row justify-content-center">
+                                <div className="col-6 mb-4">
+                                    <label htmlFor="Edad" className="form-label">Edad</label>
                                     <input
-                                        onChange={(input) => setMonto(input.target.value)}
-                                        type="text" className="form-control" aria-label="monto" required />
+                                        onChange={(input) => setEdad(input.target.value)}
+                                        type="number" className="form-control" aria-label="Edad" required />
                                 </div>
                             </div>
                             <div className="text-center">
@@ -114,6 +106,20 @@ export default function SignUp() {
                         </form >
                     </div >
                 </div>
+
+                {/* Modal */}
+                {showModal && <Modal title={title} message={message}
+                    onClose={() => setShowModal(false)}
+                    footer={
+                        <button
+                            type="button"
+                            className="btn btn-secondary btn-outline2"
+                            onClick={() => {
+                                setShowModal(false);
+                            }}
+                        >
+                            Cerrar
+                        </button>} />}
             </div>
         </>
     );
