@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import { useRouter } from 'next/router';
 import SideBar from "./modals/SideBar";
+import UploadModal from "./modals/UploadModal";
 
 type OptionKeys = "flashcards" | "resumen" | "examenPractica";
 
@@ -30,6 +31,8 @@ interface Resource {
     content: any;
 }
 
+
+
 export default function HomePage() {
     const router = useRouter();
     const [showOptions, setShowOptions] = useState(false);
@@ -38,10 +41,15 @@ export default function HomePage() {
         resumen: false,
         examenPractica: false,
     });
-
+    const [showUploadModal, setShowUploadModal] = useState(false);
     const [showGeneratedContent, setShowGeneratedContent] = useState(false);
     const [savedResources, setSavedResources] = useState<Resource[]>([]);
     const key: keyof Resource = 'content';
+
+    const handleUpload = (files: any) => {
+        console.log("Uploaded files:", files);
+        setShowUploadModal(false); 
+      };
 
     const sampleFlashcards: Flashcard[] = [
         { topic: "Cálculo Integral", question: "¿Qué es una integral definida?", answer: "Es una integral con límites superiores e inferiores que da como resultado un número real." },
@@ -65,18 +73,6 @@ export default function HomePage() {
         ]
     };
 
-    const toggleOption = (option: OptionKeys) => {
-        setSelectedOptions((prev) => ({
-            ...prev,
-            [option]: !prev[option],
-        }));
-        console.log(selectedOptions);
-    };
-
-    const handleButtonClick = () => {
-        setShowOptions(true);
-    };
-
     const handleSaveResources = (sampleExam: Exam) => {
 
         const newResource: Resource[] = [];
@@ -92,10 +88,15 @@ export default function HomePage() {
         setSavedResources(prev => [...prev, ...newResource]);
     };
 
+    useEffect(() => {
+        const initBootstrap = async () => {
+          await import('bootstrap');
+        };
+        initBootstrap();
+      }, []);
 
     return (
         <div className="container-fluid ">
-
             <div className="row ">
                 <aside className="col-md-3 col-lg-3 sticky-top">
                     <SideBar />
@@ -132,21 +133,7 @@ export default function HomePage() {
                         <p className="">Sube tus archivos o anotaciones para estudiar con nuestros juegos, exámenes y flashcards
                             generadas con IA!
                         </p>
-                        <button className="btn btn-act" onClick={handleButtonClick}>Subir anotaciones</button>
-                        {showOptions && (
-                            <div id="btngroup1" className="fade-in m-3 ">
-                                <h5>Generar:</h5>
-                                <button className={`btn m-2 ${selectedOptions.flashcards ? "btn-selected" : "btn-tipo"}`} onClick={() => toggleOption("flashcards")}>Flashcards</button>
-                                <button className={`btn m-2 ${selectedOptions.resumen ? "btn-selected" : "btn-tipo"}`} onClick={() => toggleOption("resumen")}>Resumen</button>
-                                <button className={`btn m-2 ${selectedOptions.examenPractica ? "btn-selected" : "btn-tipo"}`} onClick={() => toggleOption("examenPractica")}>Examen de Práctica</button>
-                                <div>
-
-                                </div>
-                                {(selectedOptions.flashcards || selectedOptions.resumen || selectedOptions.examenPractica) && (
-                                    <button className="btn btn-act mt-4" onClick={() => setShowGeneratedContent(true)}>Continuar →</button>
-                                )}
-                            </div>
-                            )}
+                        <button className="btn btn-act" onClick={() => setShowUploadModal(true)}>Subir anotaciones</button>
                             {showGeneratedContent && (
                                 
                             <div className="mt-4">
@@ -205,6 +192,11 @@ export default function HomePage() {
                            
                         )}
                     </section>
+                    {showUploadModal && (
+                        <UploadModal
+                        onClose={() => setShowUploadModal(false)} 
+                        onFileUpload={handleUpload}/>
+                    )}
                 </main>
             </div>
         </div>
