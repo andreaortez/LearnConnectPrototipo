@@ -421,7 +421,7 @@
 #landing {
     padding: 5%;
     background-color: #9ccc9e;
-    height: 40vh;
+    height: 40%;
     text-align: center;
     justify-items: center;
     align-content: center;
@@ -436,7 +436,7 @@
     /* background-color:rgba(158,204,158,255); */
     /* background-color:#8bc99b ; */
     background: linear-gradient(to bottom, #8bc99b, #47d2a6);
-    height: 70vh;
+    height: 100vh;
     text-align: center;
     justify-items: center;
     align-content: center;
@@ -486,9 +486,8 @@
 .btn-tipo {
     height: 50px;
     width: 220px;
-    color: #4a7557 !important;
-    background-color: none !important;
-    color: #4a7567;
+    color: #ffffff !important;
+    background-color:  rgb(148, 33, 168) !important;
     border: 2px solid rgb(255, 255, 255) !important;
     border-style: groove;
     /* background-color: #c46aa2 !important;
@@ -497,14 +496,13 @@
 
 .btn-tipo.btn-selected {
     /* background-color: #9f4e78 !important;  */
-    background-color: #e6ffeee0 !important;
+    background-color:  rgb(185, 84, 203) !important;
     color: #4a7557;
     border: none !important;
 }
 
 .btn-tipo:hover {
-    background-color: #e6ffeee0 !important;
-    color: #47d2a6 !important;
+    background-color:  rgb(195, 70, 216) !important;
     border: none !important;
 }
 
@@ -523,3 +521,86 @@
     font-variation-settings:
         "wdth" 100;
 }
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7); 
+    z-index: 1040; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+.dropzone {
+    height: 300px;
+    border: 2px dashed #6c757d;
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+    justify-items: center;
+    align-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .dropzone.dragging {
+    background-color: rgba(108, 117, 125, 0.1);
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;   
+  }
+  
+  #archivosubido {
+    background-color: #f3f3f4;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 6px;
+  }
+  
+  #btngroup-subir {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .btn-subir {
+    background-color: rgb(118, 118, 118) !important;
+    color: #ffffff !important;
+    border: none !important;
+    padding: 10px 30px !important;
+    margin: 5px;
+}
+.modal-content {
+    animation: slideIn 0.3s ease-out;
+  }
+  
+  @keyframes slideIn {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  .progress {
+    height: 20px;
+    background-color: #e9ecef;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .progress-bar {
+    background: linear-gradient(135deg, #8bc99b, #47d2a6);
+    transition: width 0.3s ease;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+  }
