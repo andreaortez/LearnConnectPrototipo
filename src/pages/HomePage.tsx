@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from 'next/router';
 import SideBar from "./modals/SideBar";
 import UploadModal from "./modals/UploadModal";
@@ -26,15 +26,11 @@ interface Summary {
     summary: string;
 }
 interface Resource {
-
     type: 'flashcard' | 'summary' | 'practiceExam';
     content: any;
 }
 
-
-
 export default function HomePage() {
-    const router = useRouter();
     const [showOptions, setShowOptions] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState<OptionsState>({
         flashcards: false,
@@ -48,8 +44,8 @@ export default function HomePage() {
 
     const handleUpload = (files: any) => {
         console.log("Uploaded files:", files);
-        setShowUploadModal(false); 
-      };
+        setShowUploadModal(false);
+    };
 
     const sampleFlashcards: Flashcard[] = [
         { topic: "Cálculo Integral", question: "¿Qué es una integral definida?", answer: "Es una integral con límites superiores e inferiores que da como resultado un número real." },
@@ -67,7 +63,7 @@ export default function HomePage() {
         questions: [
             { question: "¿Cuál es la integral de x^2?", correctAnswer: "(1/3)x^3 + C" },
             { question: "¿Cuál es el determinante de la matriz [[2, 3], [1, 4]]?", correctAnswer: "5" },
-            { question: "¿Cómo se calcula la suma de los primeros n términos de una progresión aritmética?", correctAnswer: "S_n = n/2 * (a_1 + a_n)" }, 
+            { question: "¿Cómo se calcula la suma de los primeros n términos de una progresión aritmética?", correctAnswer: "S_n = n/2 * (a_1 + a_n)" },
             { question: "¿Cuál es la derivada de 3x^4?", correctAnswer: "12x^3" },
             { question: "¿Qué valor tiene la suma de los primeros 5 números primos?", correctAnswer: "28" }
         ]
@@ -90,10 +86,10 @@ export default function HomePage() {
 
     useEffect(() => {
         const initBootstrap = async () => {
-          await import('bootstrap');
+            await import('bootstrap');
         };
         initBootstrap();
-      }, []);
+    }, []);
 
     return (
         <div className="container-fluid ">
@@ -134,68 +130,68 @@ export default function HomePage() {
                             generadas con IA!
                         </p>
                         <button className="btn btn-act" onClick={() => setShowUploadModal(true)}>Subir anotaciones</button>
-                            {showGeneratedContent && (
-                                
+                        {showGeneratedContent && (
+
                             <div className="mt-4">
-                                
+
                                 {selectedOptions.flashcards && (
                                     <div>
                                         <section id="actividades" className="pt-6 ibm-plex-sans-pSans">
-                                        <h3>Flashcards</h3>
-                                        {sampleFlashcards.map((card, index) => (
-                                            <div key={index} className="p-4 border rounded shadow">
-                                                <h4>{card.topic}</h4>
-                                                <p><strong>Pregunta:</strong> {card.question}</p>
-                                                <p><strong>Respuesta:</strong> {card.answer}</p>
-                                                
-                                            </div>
-                                        ))}
+                                            <h3>Flashcards</h3>
+                                            {sampleFlashcards.map((card, index) => (
+                                                <div key={index} className="p-4 border rounded shadow">
+                                                    <h4>{card.topic}</h4>
+                                                    <p><strong>Pregunta:</strong> {card.question}</p>
+                                                    <p><strong>Respuesta:</strong> {card.answer}</p>
+
+                                                </div>
+                                            ))}
                                         </section>
                                     </div>
                                 )}
-                                
+
 
                                 {selectedOptions.resumen && (
                                     <div>
                                         <section id="actividades" className="pt-6 ibm-plex-sans-pSans">
-                                        <h3>Resumen</h3>
-                                        <div className="p-4 border rounded shadow">
-                                        
-                                            <h4>{sampleSummary.topic}</h4>
-                                            <p>{sampleSummary.summary}</p>
-                                            
-                                        </div>
+                                            <h3>Resumen</h3>
+                                            <div className="p-4 border rounded shadow">
+
+                                                <h4>{sampleSummary.topic}</h4>
+                                                <p>{sampleSummary.summary}</p>
+
+                                            </div>
                                         </section>
                                     </div>
-                                    
+
                                 )}
-                                
+
                                 {selectedOptions.examenPractica && (
                                     <div>
                                         <section id="actividades" className="pt-6 ibm-plex-sans-pSans">
-                                        <h3>Examen de Práctica</h3>
-                                        <div className="p-4 border rounded shadow">
-                                            <h4>{sampleExam.topic}</h4>
-                                            {sampleExam.questions.map((q, index) => (
-                                                <div key={index}>
-                                                    <p><strong>Pregunta:</strong> {q.question}</p>
-                                                    <p><strong>Respuesta Correcta:</strong> {q.correctAnswer}</p>
-                                                </div>
-                                            ))}
-                                            <button className="btn btn-save" onClick={() => handleSaveResources(sampleExam)}>Guardar en Mis Recursos</button>
-                                        </div>
+                                            <h3>Examen de Práctica</h3>
+                                            <div className="p-4 border rounded shadow">
+                                                <h4>{sampleExam.topic}</h4>
+                                                {sampleExam.questions.map((q, index) => (
+                                                    <div key={index}>
+                                                        <p><strong>Pregunta:</strong> {q.question}</p>
+                                                        <p><strong>Respuesta Correcta:</strong> {q.correctAnswer}</p>
+                                                    </div>
+                                                ))}
+                                                <button className="btn btn-save" onClick={() => handleSaveResources(sampleExam)}>Guardar en Mis Recursos</button>
+                                            </div>
                                         </section>
                                     </div>
-                                    
+
                                 )}
                             </div>
-                           
+
                         )}
                     </section>
                     {showUploadModal && (
                         <UploadModal
-                        onClose={() => setShowUploadModal(false)} 
-                        onFileUpload={handleUpload}/>
+                            onClose={() => setShowUploadModal(false)}
+                            onFileUpload={handleUpload} />
                     )}
                 </main>
             </div>
