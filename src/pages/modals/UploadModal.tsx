@@ -49,6 +49,7 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
+    console.log(files);
     setUploadedFiles((prev) => [...prev, ...files]);
   };
 
