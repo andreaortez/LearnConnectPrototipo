@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useRouter } from 'next/router';
 
 interface UploadModalProps {
   onClose: () => void;
@@ -17,6 +18,7 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const router = useRouter();
   const [selectedOptions, setSelectedOptions] = useState<Record<OptionKeys, boolean>>({
     flashcards: false,
     resumen: false,
@@ -66,8 +68,25 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
         setUploadProgress(0);
         onFileUpload(uploadedFiles);
         onClose();
+
+        if (selectedOptions.flashcards)
+          localStorage.setItem("flashcard", 'true');
+        else
+          localStorage.setItem("flashcard", 'false');
+
+        if (selectedOptions.examenPractica)
+          localStorage.setItem("exam", 'true');
+        else
+          localStorage.setItem("exam", 'false');
+
+        if (selectedOptions.resumen)
+          localStorage.setItem("summary", 'true')
+        else
+          localStorage.setItem("summary", 'false');
+
+        router.push('/Actividades')
       }
-    }, 300); 
+    }, 300);
   };
 
   return (
@@ -98,21 +117,21 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
               </div>
               {uploadedFiles.length > 0 && (
                 <>
-                <ul id="archivosubido" className="mt-3">
-                  {uploadedFiles.map((file, index) => (
-                    <li id="nombrearchivo" key={index}>{file.name}</li>
-                  ))}
-                </ul>
-                <h5 className="mx-2">Generar:</h5>
-                <div id="btngroup-subir" className="fade-in m-3  ">                   
-                    <button className={`btn btn-tipo m-2 ${selectedOptions.flashcards ? "btn-selected" : ""} `} 
-                    onClick={() => toggleOption("flashcards")}>Flashcards</button>
-                    <button className={`btn btn-tipo m-2 ${selectedOptions.resumen ? "btn-selected" : ""} `} 
-                    onClick={() => toggleOption("resumen")}>Resumen</button>
+                  <ul id="archivosubido" className="mt-3">
+                    {uploadedFiles.map((file, index) => (
+                      <li id="nombrearchivo" key={index}>{file.name}</li>
+                    ))}
+                  </ul>
+                  <h5 className="mx-2">Generar:</h5>
+                  <div id="btngroup-subir" className="fade-in m-3  ">
+                    <button className={`btn btn-tipo m-2 ${selectedOptions.flashcards ? "btn-selected" : ""} `}
+                      onClick={() => toggleOption("flashcards")}>Flashcards</button>
+                    <button className={`btn btn-tipo m-2 ${selectedOptions.resumen ? "btn-selected" : ""} `}
+                      onClick={() => toggleOption("resumen")}>Resumen</button>
                     <button className={`btn btn-tipo m-2 ${selectedOptions.examenPractica ? "btn-selected" : ""}`}
-                    onClick={() => toggleOption("examenPractica")}>Prueba</button>
+                      onClick={() => toggleOption("examenPractica")}>Prueba</button>
                   </div>
-                  </>
+                </>
               )}
               {uploading && (
                 <div className="progress mt-3">
