@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+/* import React, { useState } from 'react';
 import Modal from './modal';
 
 interface ExamModalProps {
@@ -100,4 +100,110 @@ export default function ExamModal({ onClose, onSave }: ExamModalProps) {
             </button>
         </Modal>
     );
-}
+} */
+    import React, { useState } from 'react';
+    import Modal from './modal';
+    
+    interface ExamModalProps {
+      data: {
+        question: string;
+        option1: string;
+        option2: string;
+        option3: string;
+        option4: string;
+        rightAnswer: number;
+      }[];
+      onClose: () => void;
+    }
+    
+    export default function ExamModal({ data, onClose }: ExamModalProps) {
+      const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+      const [selectedOption, setSelectedOption] = useState<number | null>(null);
+      const [answers, setAnswers] = useState<number[]>([]);
+    
+      const currentQuestion = data[currentQuestionIndex];
+    
+      const handleOptionSelect = (optionIndex: number) => {
+        setSelectedOption(optionIndex);
+      };
+    
+      const handleNextQuestion = () => {
+        if (selectedOption !== null) {
+          setAnswers((prevAnswers) => [...prevAnswers, selectedOption]);
+          setSelectedOption(null);
+          if (currentQuestionIndex < data.length - 1) {
+            setCurrentQuestionIndex(currentQuestionIndex + 1);
+          } else {
+            alert("¡Has completado todas las preguntas!");
+            onClose();
+          }
+        } else {
+          alert("Por favor, selecciona una respuesta.");
+        }
+      };
+    
+      return (
+        <Modal
+          title={`Pregunta ${currentQuestionIndex + 1} de ${data.length}`}
+          message={currentQuestion.question}
+          onClose={onClose}
+          footer={
+            <button className="btn btn-primary" onClick={handleNextQuestion}>
+              {currentQuestionIndex < data.length - 1 ? "Siguiente" : "Finalizar"}
+            </button>
+          }
+        >
+          <div className="mt-3">
+            <div className="form-check">
+              <input
+                type="radio"
+                className="form-check-input"
+                id={`option1-${currentQuestionIndex}`}
+                checked={selectedOption === 1}
+                onChange={() => handleOptionSelect(1)}
+              />
+              <label className="form-check-label" htmlFor={`option1-${currentQuestionIndex}`}>
+                {currentQuestion.option1}
+              </label>
+            </div>
+            <div className="form-check">
+              <input
+                type="radio"
+                className="form-check-input"
+                id={`option2-${currentQuestionIndex}`}
+                checked={selectedOption === 2}
+                onChange={() => handleOptionSelect(2)}
+              />
+              <label className="form-check-label" htmlFor={`option2-${currentQuestionIndex}`}>
+                {currentQuestion.option2}
+              </label>
+            </div>
+            <div className="form-check">
+              <input
+                type="radio"
+                className="form-check-input"
+                id={`option3-${currentQuestionIndex}`}
+                checked={selectedOption === 3}
+                onChange={() => handleOptionSelect(3)}
+              />
+              <label className="form-check-label" htmlFor={`option3-${currentQuestionIndex}`}>
+                {currentQuestion.option3}
+              </label>
+            </div>
+            <div className="form-check">
+              <input
+                type="radio"
+                className="form-check-input"
+                id={`option4-${currentQuestionIndex}`}
+                checked={selectedOption === 4}
+                onChange={() => handleOptionSelect(4)}
+              />
+              <label className="form-check-label" htmlFor={`option4-${currentQuestionIndex}`}>
+                {currentQuestion.option4}
+              </label>
+            </div>
+          </div>
+        </Modal>
+      );
+    }
+    

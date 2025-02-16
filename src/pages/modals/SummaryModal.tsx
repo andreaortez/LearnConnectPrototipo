@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
 import Modal from './modal';
 
+interface Summary {
+    topic: string;
+    summary: string;
+}
 interface SummaryModalProps {
+    data: Summary[];
     onClose: () => void;
-    onSave: (summaryData: { topic: string; summary: string }) => void;
+ /*    onSave: (summaryData: { topic: string; summary: string }) => void; */
 }
 
-export default function SummaryModal({ onClose, onSave }: SummaryModalProps) {
+export default function SummaryModal({ onClose, data }: SummaryModalProps) {
     const [topic, setTopic] = useState('');
     const [summary, setSummary] = useState('');
 
     const handleSave = () => {
-        onSave({ topic, summary });
-        onClose();
+        console.log("Summary saved:");
+        /* onSave({ topic, summary });
+        onClose(); */
     };
 
     return (

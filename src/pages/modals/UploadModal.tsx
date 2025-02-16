@@ -55,38 +55,49 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
     setUploadedFiles((prev) => [...prev, ...files]);
   };
 
-  const simulateUpload = () => {
+  const handleUploadAndGenerate = async () => {
     setUploading(true);
-    let progress = 0;
+    try {
+      const formData = new FormData();
+      uploadedFiles.forEach((file) => formData.append("file", file));
 
-    const interval = setInterval(() => {
-      progress += 10;
-      setUploadProgress(progress);
-      if (progress >= 100) {
-        clearInterval(interval);
-        setUploading(false);
-        setUploadProgress(0);
-        onFileUpload(uploadedFiles);
-        onClose();
+      // Upload file to /api/upload
+      const uploadResponse = await axios.post("/api/upload", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
-        if (selectedOptions.flashcards)
-          localStorage.setItem("flashcard", 'true');
-        else
-          localStorage.setItem("flashcard", 'false');
+      const filePath = uploadResponse.data.path;
+      console.log("File uploaded to:", filePath);
 
-        if (selectedOptions.examenPractica)
-          localStorage.setItem("exam", 'true');
-        else
-          localStorage.setItem("exam", 'false');
+      const backendBaseURL = "http://localhost:3001";
+     
+      // guarda que optiones escogio el usuario en local storage
+      localStorage.setItem("flashcard", selectedOptions.flashcards.toString());
+      localStorage.setItem("summary", selectedOptions.resumen.toString());
+      localStorage.setItem("exam", selectedOptions.examenPractica.toString());
 
-        if (selectedOptions.resumen)
-          localStorage.setItem("summary", 'true')
-        else
-          localStorage.setItem("summary", 'false');
-
-        router.push('/Actividades')
+      if (selectedOptions.flashcards) {
+        const response = await axios.get(`${backendBaseURL}/createFlashcards`, {params: { path: filePath },});
+        localStorage.setItem("flashcardData", JSON.stringify(response.data.list));
       }
-    }, 300);
+
+      if (selectedOptions.resumen) {
+        const response = await axios.get(`${backendBaseURL}/createSummary`, {params: { path: filePath },});
+        localStorage.setItem("summaryData", response.data.summary);
+      }
+
+      if (selectedOptions.examenPractica) {
+        const response = await axios.get(`${backendBaseURL}/createExamen`, {params: { path: filePath },});
+        localStorage.setItem("examData", JSON.stringify(response.data.list));
+      }
+
+      setUploading(false);
+      router.push("/Actividades");
+      onClose();
+    } catch (error) {
+      console.error("Error:", error);
+      setUploading(false);
+    }
   };
 
   return (
@@ -145,7 +156,7 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
               <button
                 type="button"
                 className="btn btn-subir"
-                onClick={simulateUpload}
+                onClick={handleUploadAndGenerate}
                 disabled={uploadedFiles.length === 0 || uploading}
               >
                 {uploading ? "Generando..." : "Subir Archivos"}

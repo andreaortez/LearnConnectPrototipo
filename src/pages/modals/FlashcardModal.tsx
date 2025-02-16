@@ -1,62 +1,32 @@
-import React, { useState } from 'react';
-import Modal from './modal';
-
+import React from 'react';
+import Flashcard from '../Flashcard';
 
 interface FlashcardModalProps {
-    onClose: () => void;
-    onSave: (flashcardData: { topic: string; question: string; answer: string }) => void;
+  data: { word: string; definition: string }[];
+  onClose: () => void;
 }
 
-export default function FlashcardModal({ onClose, onSave }: FlashcardModalProps) {
-    const [topic, setTopic] = useState('');
-    const [question, setQuestion] = useState('');
-    const [answer, setAnswer] = useState('');
-
-    const handleSave = () => {
-        onSave({ topic, question, answer });
-        onClose();
-    };
-
-    return (
-        <Modal
-            title="Crear Flashcard"
-            message="Completa la información para tu flashcard."
-            onClose={onClose}
-            footer={
-                <button className="btn btn-primary" onClick={handleSave} disabled={!topic || !question || !answer}>
-                    Guardar
-                </button>
-            }
-        >
-            <div className="mb-3">
-                <label className="form-label">Tema:</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    value={topic}
-                    onChange={(e) => setTopic(e.target.value)}
-                    placeholder="Ingrese el tema"
-                />
-            </div>
-            <div className="mb-3">
-                <label className="form-label">Pregunta:</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    value={question}
-                    onChange={(e) => setQuestion(e.target.value)}
-                    placeholder="Escriba la pregunta"
-                />
-            </div>
-            <div className="mb-3">
-                <label className="form-label">Respuesta:</label>
-                <textarea
-                    className="form-control"
-                    value={answer}
-                    onChange={(e) => setAnswer(e.target.value)}
-                    placeholder="Ingrese la respuesta"
-                ></textarea>
-            </div>
-        </Modal>
-    );
+export default function FlashcardModal({ data, onClose }: FlashcardModalProps) {
+  return (
+    <div className="modal show d-block" tabIndex={-1}>
+      <div className="modal-dialog modal-dialog-centered">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">Flashcards</h5>
+            <button type="button" className="btn-close" aria-label="Close" onClick={onClose}></button>
+          </div>
+          <div className="modal-body d-flex flex-wrap justify-content-center">
+            {data.map((item, index) => (
+              <Flashcard key={index} word={item.word} definition={item.definition} />
+            ))}
+          </div>
+          <div className="modal-footer">
+            <button className="btn btn-secondary" onClick={onClose}>
+              Cerrar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }

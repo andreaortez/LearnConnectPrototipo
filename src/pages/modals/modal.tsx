@@ -8,6 +8,7 @@ interface ModalParams {
     children?: React.ReactNode;
 }
 
+
 export default function Modal({ title, message, onClose, footer, children }: ModalParams) {
     return (
         <div className="modal show d-block" tabIndex={-1}>
