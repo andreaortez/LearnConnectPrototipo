@@ -11,6 +11,7 @@ interface activities {
 }
 
 export default function Actividades() {
+    const [isLoading, setIsLoading] = useState(true);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [selectedOptions, setSelectedOptions] = useState<activities>({
         flashcards: false,
@@ -47,13 +48,15 @@ export default function Actividades() {
         exam: examData ? JSON.parse(examData) : null,
       });
 
-      localStorage.removeItem("flashcard");
-    localStorage.removeItem("summary");
-    localStorage.removeItem("exam");
-    localStorage.removeItem("flashcardData");
-    localStorage.removeItem("summaryData");
-    localStorage.removeItem("examData");
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
   }, []);
+
+  if (isLoading) {
+    return <div>Cargando Actividades...</div>;
+  }
+
 
   const handleNextStep = () => {
     setCurrentStep((prevStep) => prevStep + 1);
@@ -67,7 +70,8 @@ export default function Actividades() {
 
   const currentModal = modalsOrder[currentStep];
 
-    return (<>
+    return (
+    <>
        <div id="actividades" className="d-flex flex-column justify-content-center align-items-center vh-100">
       <h1>Actividades Generadas</h1>
 

@@ -8,10 +8,7 @@ interface UploadModalProps {
 }
 
 type OptionKeys = "flashcards" | "resumen" | "examenPractica";
-interface UploadModalProps {
-  onClose: () => void;
-  onFileUpload: (files: File[]) => void;
-}
+
 
 export default function UploadModal({ onClose, onFileUpload }: UploadModalProps) {
   const [dragging, setDragging] = useState(false);
@@ -61,9 +58,15 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
       const formData = new FormData();
       uploadedFiles.forEach((file) => formData.append("file", file));
 
-      // Upload file to /api/upload
+
       const uploadResponse = await axios.post("/api/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
+        onUploadProgress: (progressEvent) => {
+          if (progressEvent.total) {
+            const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+            setUploadProgress(percentCompleted);
+          }
+        },
       });
 
       const filePath = uploadResponse.data.path;
@@ -76,24 +79,38 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
       localStorage.setItem("summary", selectedOptions.resumen.toString());
       localStorage.setItem("exam", selectedOptions.examenPractica.toString());
 
+      const requests = [];
       if (selectedOptions.flashcards) {
-        const response = await axios.get(`${backendBaseURL}/createFlashcards`, {params: { path: filePath },});
-        localStorage.setItem("flashcardData", JSON.stringify(response.data.list));
+        requests.push(
+          axios.get(`${backendBaseURL}/createFlashcards`, { params: { path: filePath } }).then((res) => {
+            localStorage.setItem("flashcardData", JSON.stringify(res.data.list));
+            console.log("Flashcards");
+          }).catch((err) => console.error("Flashcard Error:", err))
+        );
       }
-
       if (selectedOptions.resumen) {
-        const response = await axios.get(`${backendBaseURL}/createSummary`, {params: { path: filePath },});
-        localStorage.setItem("summaryData", response.data.summary);
+        requests.push(
+          axios.get(`${backendBaseURL}/createSummary`, { params: { path: filePath } }).then((res) => {
+            localStorage.setItem("summaryData", res.data.summary);
+          }).catch((err) => console.error("Summary Error:", err))
+        );
       }
-
       if (selectedOptions.examenPractica) {
-        const response = await axios.get(`${backendBaseURL}/createExamen`, {params: { path: filePath },});
-        localStorage.setItem("examData", JSON.stringify(response.data.list));
+        requests.push(
+          axios.get(`${backendBaseURL}/createExamen`, { params: { path: filePath } }).then((res) => {
+            localStorage.setItem("examData", JSON.stringify(res.data.list));
+          }).catch((err) => console.error("Exam Error:", err))
+        );
       }
 
-      setUploading(false);
-      router.push("/Actividades");
-      onClose();
+      await Promise.all(requests);
+      console.log("Data generation complete");
+      onFileUpload(uploadedFiles);
+      setTimeout(() => {
+        setUploading(false);
+        onClose();
+      }, 500); 
+      
     } catch (error) {
       console.error("Error:", error);
       setUploading(false);
@@ -167,4 +184,4 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
       </div>
     </div>
   );
-}
+};
