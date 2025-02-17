@@ -1,23 +1,14 @@
 import { useState, useEffect } from "react";
 import SideBar from "./modals/SideBar";
 import UploadModal from "./modals/UploadModal";
-import Actividades from "./Actividades";
+
 
 export default function HomePage() {
-    const [showActivities, setShowActivities]= useState(false);
     const [showUploadModal, setShowUploadModal] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-
     const handleUpload = (files: any) => {
         console.log("Uploaded files:", files);
         setShowUploadModal(false);
-        setIsLoading(true);
-
-        setTimeout(() => {
-            setShowActivities(true);
-            setIsLoading(false);
-          }, 1000);
-        };
+    };
 
    
     useEffect(() => {
@@ -42,45 +33,37 @@ export default function HomePage() {
                                 data-bs-target="#sidebarMenu"
                                 aria-controls="sidebarMenu"
                                 aria-expanded="false"
-                                aria-label="Toggle navigation">
+                                aria-label="Toggle navigation"
+                            >
                                 <span className="navbar-toggler-icon"></span>
                             </button>
                             <span className="navbar-brand mb-0 h1 ibm-plex-sans-pSans">Homepage</span>
                         </div>
                     </nav>
-                    {isLoading ? (
-                        <div className="text-center mt-5">Cargando actividades...</div>
-                    ) : showActivities ? (
-                             <Actividades />
-                        ) : (
-                            <>
-                            <section id="landing" className="pt-3 ibm-plex-sans-pSans"
-                                style={{
-                                    backgroundImage: 'url("/images/banner.png")',
-                                    backgroundSize: 'cover',
-                                    backgroundRepeat: 'no-repeat',
-                                    backgroundPosition: 'center',
-                                    minHeight: '300px'
-                                }}>
-                                <h1>Bienvenido a LearnConnect</h1>
-                            </section>
-                            <section id="actividades" className="pt-6 ibm-plex-sans-pSans">
-                                <h2>Actividades</h2>
-                                <p className="">
-                                    Sube tus archivos o anotaciones para estudiar con nuestros juegos, exámenes y flashcards
-                                    generadas con IA!
-                                </p>
-                                <button className="btn btn-act" onClick={() => setShowUploadModal(true)}>
-                                    Subir anotaciones</button>
-                            
-                            </section>
-                            {showUploadModal && (
-                                <UploadModal
-                                    onClose={() => setShowUploadModal(false)}
-                                    onFileUpload={handleUpload} />
-                            )}
-                            </>
-                        )}
+                    <section id="landing" className="pt-3 ibm-plex-sans-pSans"
+                        style={{
+                            backgroundImage: 'url("/images/banner.png")',
+                            backgroundSize: 'cover',
+                            backgroundRepeat: 'no-repeat',
+                            backgroundPosition: 'center',
+                            minHeight: '300px'
+                        }}
+                    >
+                        <h1>Bienvenido a LearnConnect</h1>
+                    </section>
+                    <section id="actividades" className="pt-6 ibm-plex-sans-pSans">
+                        <h2>Actividades</h2>
+                        <p className="">Sube tus archivos o anotaciones para estudiar con nuestros juegos, exámenes y flashcards
+                            generadas con IA!
+                        </p>
+                        <button className="btn btn-act" onClick={() => setShowUploadModal(true)}>Subir anotaciones</button>
+                      
+                    </section>
+                    {showUploadModal && (
+                        <UploadModal
+                            onClose={() => setShowUploadModal(false)}
+                            onFileUpload={handleUpload} />
+                    )}
                 </main>
             </div>
         </div>

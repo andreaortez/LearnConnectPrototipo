@@ -8,7 +8,10 @@ interface UploadModalProps {
 }
 
 type OptionKeys = "flashcards" | "resumen" | "examenPractica";
-
+interface UploadModalProps {
+  onClose: () => void;
+  onFileUpload: (files: File[]) => void;
+}
 
 export default function UploadModal({ onClose, onFileUpload }: UploadModalProps) {
   const [dragging, setDragging] = useState(false);
@@ -58,15 +61,9 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
       const formData = new FormData();
       uploadedFiles.forEach((file) => formData.append("file", file));
 
-
+      // Upload file to /api/upload
       const uploadResponse = await axios.post("/api/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
-        onUploadProgress: (progressEvent) => {
-          if (progressEvent.total) {
-            const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-            setUploadProgress(percentCompleted);
-          }
-        },
       });
 
       const filePath = uploadResponse.data.path;
@@ -105,9 +102,9 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
 
       await Promise.all(requests);
       console.log("Data generation complete");
-      onFileUpload(uploadedFiles);
       setTimeout(() => {
         setUploading(false);
+        router.push("/Actividades");
         onClose();
       }, 500); 
       
