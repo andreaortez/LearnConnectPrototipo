@@ -1,62 +1,67 @@
-import React, { useState } from 'react';
-import Modal from './modal';
-
+import React ,{useState} from 'react';
+import Flashcard from '../Flashcard';
 
 interface FlashcardModalProps {
-    onClose: () => void;
-    onSave: (flashcardData: { topic: string; question: string; answer: string }) => void;
+  data: { word: string; definition: string }[];
+  onClose: () => void;
+  onNextActivity?: () => void;
 }
 
-export default function FlashcardModal({ onClose, onSave }: FlashcardModalProps) {
-    const [topic, setTopic] = useState('');
-    const [question, setQuestion] = useState('');
-    const [answer, setAnswer] = useState('');
+export default function FlashcardModal({ data, onClose, onNextActivity}: FlashcardModalProps) {
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const totalCards = data.length;
+    const progress = ((currentIndex + 1) / totalCards) * 100;
 
-    const handleSave = () => {
-        onSave({ topic, question, answer });
-        onClose();
-    };
-
-    return (
-        <Modal
-            title="Crear Flashcard"
-            message="Completa la información para tu flashcard."
-            onClose={onClose}
-            footer={
-                <button className="btn btn-primary" onClick={handleSave} disabled={!topic || !question || !answer}>
-                    Guardar
-                </button>
-            }
-        >
-            <div className="mb-3">
-                <label className="form-label">Tema:</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    value={topic}
-                    onChange={(e) => setTopic(e.target.value)}
-                    placeholder="Ingrese el tema"
-                />
+  const handleNext = () => {
+    if (currentIndex < data.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    } else {
+      // si selecciono otra actividad
+      if (onNextActivity) {
+        onNextActivity();
+      } else {
+        onClose(); 
+      }
+    }
+  };
+  return (
+    <div className="modal show d-block" tabIndex={-1}>
+      <div className="modal-dialog modal-dialog-centered">
+        <div id='flashcard-container' className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">Flashcards</h5>
+            <button type="button" className="btn-close" aria-label="Close" onClick={onClose}></button>
+          </div>
+          <div className="modal-body d-flex justify-content-center">
+            <Flashcard
+              word={data[currentIndex].word}
+              definition={data[currentIndex].definition}
+            />
+          </div>
+          <div className="w-100">
+              <div id='progress-flashcard' className="progress mb-3">
+                <div
+                  className="progress-bar"
+                  role="progressbar"
+                  style={{ width: `${progress}%` }}
+                >
+                  {Math.round(progress)}%
+                </div>
+              </div>
+              <p className="text-center text-black">
+                {currentIndex + 1}/{totalCards} 
+              </p>
             </div>
-            <div className="mb-3">
-                <label className="form-label">Pregunta:</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    value={question}
-                    onChange={(e) => setQuestion(e.target.value)}
-                    placeholder="Escriba la pregunta"
-                />
-            </div>
-            <div className="mb-3">
-                <label className="form-label">Respuesta:</label>
-                <textarea
-                    className="form-control"
-                    value={answer}
-                    onChange={(e) => setAnswer(e.target.value)}
-                    placeholder="Ingrese la respuesta"
-                ></textarea>
-            </div>
-        </Modal>
-    );
+          <div className="modal-footer">
+            <button
+              className="btn btn-verde"
+              onClick={handleNext}
+            >
+              {currentIndex < data.length - 1 ? "Siguiente" : "Finalizar"}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }

@@ -8,10 +8,7 @@ interface UploadModalProps {
 }
 
 type OptionKeys = "flashcards" | "resumen" | "examenPractica";
-interface UploadModalProps {
-  onClose: () => void;
-  onFileUpload: (files: File[]) => void;
-}
+
 
 export default function UploadModal({ onClose, onFileUpload }: UploadModalProps) {
   const [dragging, setDragging] = useState(false);
@@ -51,41 +48,73 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
+    console.log(files);
     setUploadedFiles((prev) => [...prev, ...files]);
   };
 
-  const simulateUpload = () => {
+  const handleUploadAndGenerate = async () => {
     setUploading(true);
-    let progress = 0;
+    try {
+      const formData = new FormData();
+      uploadedFiles.forEach((file) => formData.append("file", file));
 
-    const interval = setInterval(() => {
-      progress += 10;
-      setUploadProgress(progress);
-      if (progress >= 100) {
-        clearInterval(interval);
-        setUploading(false);
-        setUploadProgress(0);
-        onFileUpload(uploadedFiles);
-        onClose();
 
-        if (selectedOptions.flashcards)
-          localStorage.setItem("flashcard", 'true');
-        else
-          localStorage.setItem("flashcard", 'false');
+      const uploadResponse = await axios.post("/api/upload", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+        onUploadProgress: (progressEvent) => {
+          if (progressEvent.total) {
+            const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+            setUploadProgress(percentCompleted);
+          }
+        },
+      });
 
-        if (selectedOptions.examenPractica)
-          localStorage.setItem("exam", 'true');
-        else
-          localStorage.setItem("exam", 'false');
+      const filePath = uploadResponse.data.path;
+      console.log("File uploaded to:", filePath);
 
-        if (selectedOptions.resumen)
-          localStorage.setItem("summary", 'true')
-        else
-          localStorage.setItem("summary", 'false');
+      const backendBaseURL = "http://localhost:3001";
+     
+      // guarda que optiones escogio el usuario en local storage
+      localStorage.setItem("flashcard", selectedOptions.flashcards.toString());
+      localStorage.setItem("summary", selectedOptions.resumen.toString());
+      localStorage.setItem("exam", selectedOptions.examenPractica.toString());
 
-        router.push('/Actividades')
+      const requests = [];
+      if (selectedOptions.flashcards) {
+        requests.push(
+          axios.get(`${backendBaseURL}/createFlashcards`, { params: { path: filePath } }).then((res) => {
+            localStorage.setItem("flashcardData", JSON.stringify(res.data.list));
+            console.log("Flashcards");
+          }).catch((err) => console.error("Flashcard Error:", err))
+        );
       }
-    }, 300);
+      if (selectedOptions.resumen) {
+        requests.push(
+          axios.get(`${backendBaseURL}/createSummary`, { params: { path: filePath } }).then((res) => {
+            localStorage.setItem("summaryData", res.data.summary);
+          }).catch((err) => console.error("Summary Error:", err))
+        );
+      }
+      if (selectedOptions.examenPractica) {
+        requests.push(
+          axios.get(`${backendBaseURL}/createExamen`, { params: { path: filePath } }).then((res) => {
+            localStorage.setItem("examData", JSON.stringify(res.data.list));
+          }).catch((err) => console.error("Exam Error:", err))
+        );
+      }
+
+      await Promise.all(requests);
+      console.log("Data generation complete");
+      onFileUpload(uploadedFiles);
+      setTimeout(() => {
+        setUploading(false);
+        onClose();
+      }, 500); 
+      
+    } catch (error) {
+      console.error("Error:", error);
+      setUploading(false);
+    }
   };
 
   return (
@@ -144,7 +173,7 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
               <button
                 type="button"
                 className="btn btn-subir"
-                onClick={simulateUpload}
+                onClick={handleUploadAndGenerate}
                 disabled={uploadedFiles.length === 0 || uploading}
               >
                 {uploading ? "Generando..." : "Subir Archivos"}
@@ -155,4 +184,4 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
       </div>
     </div>
   );
-}
+};
