@@ -10,6 +10,11 @@ interface activities {
     summary: boolean
 }
 
+interface ModalItem {
+    component: React.FC<{ data: any; onClose: () => void }>;
+    data: any;
+  }
+
 export default function Actividades() {
     const [isLoading, setIsLoading] = useState(true);
     const [showModal, setShowModal] = useState<boolean>(false);
@@ -27,9 +32,10 @@ export default function Actividades() {
     });
 
     useEffect(() => {
-    const flashcardStorage = localStorage.getItem("flashcard") === "true";
-    const summaryStorage = localStorage.getItem("summary") === "true";
-    const examStorage = localStorage.getItem("exam") === "true";
+        const flashcardStorage = localStorage.getItem("flashcard") === "true" ? true : false;
+        const summaryStorage = localStorage.getItem("summary") === "true" ? true : false;
+        const examStorage = localStorage.getItem("exam") === "true" ? true : false;
+        
 
     setSelectedOptions({
         flashcards: flashcardStorage,
@@ -48,6 +54,9 @@ export default function Actividades() {
         exam: examData ? JSON.parse(examData) : null,
       });
 
+      console.log("Selected Options:", selectedOptions);
+      console.log("Content Loaded:", content);
+
       setTimeout(() => {
         setIsLoading(false);
       }, 500);
@@ -62,27 +71,27 @@ export default function Actividades() {
     setCurrentStep((prevStep) => prevStep + 1);
   };
 
-  const modalsOrder = [
-    { show: selectedOptions.flashcards, content: content.flashcards, component: FlashcardModal },
-    { show: selectedOptions.summary, content: content.summary, component: SummaryModal },
-    { show: selectedOptions.exam, content: content.exam, component: ExamModal },
-  ];
+    const modalsOrder: ModalItem[] = [
+        ...(selectedOptions.flashcards && content.flashcards ? [{ component: FlashcardModal, data: content.flashcards }] : []),
+        ...(selectedOptions.summary && content.summary ? [{ component: SummaryModal, data: content.summary }] : []),
+        ...(selectedOptions.exam && content.exam ? [{ component: ExamModal, data: content.exam }] : []),
+    ];
 
-  const currentModal = modalsOrder[currentStep];
+    const currentModal = modalsOrder[currentStep] ?? null;
 
     return (
     <>
        <div id="actividades" className="d-flex flex-column justify-content-center align-items-center vh-100">
       <h1>Actividades Generadas</h1>
 
-      {currentModal && currentModal.show && currentModal.content && (
+      {currentModal ? (
         <currentModal.component
-          data={currentModal.content}
-          onClose={handleNextStep} // Move to the next step when the user finishes
+          data={currentModal.data}
+          onClose={() => setCurrentStep((prevStep) => prevStep + 1)}
         />
+      ) : (
+        <h2>¡Has completado todas las actividades!</h2>
       )}
-
-      {!currentModal && <h2>¡Has completado todas las actividades!</h2>}
     </div>
   );
     </>
