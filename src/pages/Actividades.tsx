@@ -3,6 +3,8 @@ import ExamModal from './modals/ExamModal'
 import FlashcardModal from './modals/FlashcardModal'
 import SummaryModal from './modals/SummaryModal'
 import { useState, useEffect } from "react";
+import HomePage from './HomePage';
+import { useRouter } from 'next/router';
 
 interface activities {
   exam: boolean
@@ -24,6 +26,10 @@ export default function Actividades() {
     exam: false,
   });
 
+  const router = useRouter();
+  const VolverHomePage = () => {
+    router.push("/HomePage")
+  }
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [content, setContent] = useState({
     flashcards: null,
@@ -91,7 +97,12 @@ export default function Actividades() {
           />
         ) : (
           <h2>¡Has completado todas las actividades!</h2>
+
         )}
+        
+        <button className="btn btn-verde fs-4 mt-5 p-3 rounded shadow btn-outline" onClick={VolverHomePage}>
+          Regresar
+        </button>
       </div>
     </>
   );
