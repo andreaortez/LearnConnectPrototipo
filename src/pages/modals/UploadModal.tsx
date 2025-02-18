@@ -70,7 +70,7 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
       console.log("File uploaded to:", filePath);
 
       const backendBaseURL = "http://localhost:3001";
-     
+
       // guarda que optiones escogio el usuario en local storage
       localStorage.setItem("flashcard", selectedOptions.flashcards.toString());
       localStorage.setItem("summary", selectedOptions.resumen.toString());
@@ -106,8 +106,8 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
         setUploading(false);
         router.push("/Actividades");
         onClose();
-      }, 500); 
-      
+      }, 500);
+
     } catch (error) {
       console.error("Error:", error);
       setUploading(false);
