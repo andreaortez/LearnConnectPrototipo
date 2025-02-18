@@ -8,11 +8,10 @@ interface ModalParams {
     children?: React.ReactNode;
 }
 
-
 export default function Modal({ title, message, onClose, footer, children }: ModalParams) {
     return (
         <div className="modal show d-block" tabIndex={-1}>
-            <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-dialog modal-dialog-centered modal-xl">
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title">{`${title}`}</h5>

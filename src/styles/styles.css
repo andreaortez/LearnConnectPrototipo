@@ -237,29 +237,14 @@
     width: 100vw;
 }
 
-.title3 {
-    font-size: 30px;
+#pregunta {
+    font-size: 22px;
     font-weight: bold;
 }
 
-.overlay3 {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    align-content: center;
-    align-self: center;
-    color: white;
-    padding: 2%;
-    background-color: rgba(0, 0, 0, 0.1);
-}
-
-.usuario-card {
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    width: 80.5%;
-    border: none !important;
-    position: absolute;
-    transform: translateY(-50%);
-    z-index: 10;
+.respuesta {
+    font-size: 15px;
+    text-align: start !important;
 }
 
 .user-name {
@@ -267,94 +252,9 @@
     font-weight: 400;
 }
 
-.nav-elements {
-    transition: color 0.3s ease-in-out;
-    gap: 10px;
-}
-
-.nav-elements:hover {
-    background-color: #06b09a;
-    color: white !important;
-    border: none;
-}
-
-.nav-elements:hover #dashboard {
-    content: url(/imagenes/aplicaciones2.png);
-}
-
-.nav-elements:hover #propuestas {
-    content: url(/imagenes/propuesta2.png)
-}
-
-.nav-elements:hover #miperfil {
-    content: url(/imagenes/usuario2.png)
-}
-
-.nav-elements:hover #proyectos {
-    content: url(/imagenes/plano2.png)
-}
-
-.nav-elements:hover #crear {
-    content: url(/imagenes/crear2.png)
-}
-
-.nav-elements:hover #seguimiento {
-    content: url(/imagenes/usuarios-alt2.png)
-}
-
-.nav-elements:hover #miLista {
-    content: url(/imagenes/milista2.png)
-}
-
-.nav-elements:hover #notificaciones {
-    content: url(/imagenes/notificacion2.png)
-}
-
 .components {
     width: 100vw;
     align-items: start;
-}
-
-.btn2 {
-    background-color: #06b09a !important;
-    color: white !important;
-}
-
-.btn2:hover {
-    background-color: #055E63 !important;
-}
-
-.chat {
-    background-color: #06b09a;
-    color: white;
-}
-
-.btn3 {
-    outline: 1px solid #055E63 !important;
-    color: #055E63 !important;
-}
-
-.btn3:hover {
-    background-color: #055E63 !important;
-    color: white !important;
-}
-
-.paddingLeft p {
-    padding-left: 7%;
-}
-
-.btn4 {
-    outline: 1px solid #06b09a !important;
-    color: #06b09a !important;
-}
-
-.btn4:hover {
-    background-color: #06b09a !important;
-    color: white !important;
-}
-
-.btn4:hover #btn-img-editar {
-    content: url(/imagenes/lapiz1.png);
 }
 
 .windowPadding {
@@ -483,7 +383,7 @@
     height: 50px;
     width: 220px;
     color: #ffffff !important;
-    background-color:  rgb(148, 33, 168) !important;
+    background-color: rgb(148, 33, 168) !important;
     border: 2px solid rgb(255, 255, 255) !important;
     border-style: groove;
     /* background-color: #c46aa2 !important;
@@ -492,13 +392,13 @@
 
 .btn-tipo.btn-selected {
     /* background-color: #9f4e78 !important;  */
-    background-color:  rgb(185, 84, 203) !important;
+    background-color: rgb(185, 84, 203) !important;
     color: #4a7557;
     border: none !important;
 }
 
 .btn-tipo:hover {
-    background-color:  rgb(195, 70, 216) !important;
+    background-color: rgb(195, 70, 216) !important;
     border: none !important;
 }
 
@@ -524,13 +424,13 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.7); 
-    z-index: 1040; 
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1040;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  
+}
+
 .dropzone {
     height: 300px;
     border: 2px dashed #6c757d;
@@ -541,103 +441,107 @@
     align-content: center;
     cursor: pointer;
     transition: background-color 0.3s ease;
-  }
-  
-  .dropzone.dragging {
+}
+
+.dropzone.dragging {
     background-color: rgba(108, 117, 125, 0.1);
-  }
-  
-  ul {
+}
+
+ul {
     list-style: none;
-    padding: 0;   
-  }
-  
-  #archivosubido {
+    padding: 0;
+}
+
+#archivosubido {
     background-color: #f3f3f4;
     margin: 5px 0;
     padding: 10px;
     border-radius: 6px;
-  }
-  
-  #btngroup-subir {
+}
+
+#btngroup-subir {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  
-  .btn-subir {
+}
+
+.btn-subir {
     background-color: rgb(118, 118, 118) !important;
     color: #ffffff !important;
     border: none !important;
     padding: 10px 30px !important;
     margin: 5px;
 }
+
 .modal-content {
     animation: slideIn 0.3s ease-out;
-  }
-  
-  @keyframes slideIn {
+}
+
+@keyframes slideIn {
     from {
-      transform: translateY(-20px);
-      opacity: 0;
+        transform: translateY(-20px);
+        opacity: 0;
     }
+
     to {
-      transform: translateY(0);
-      opacity: 1;
+        transform: translateY(0);
+        opacity: 1;
     }
-  }
-  .progress {
+}
+
+.progress {
     height: 20px;
     background-color: #e9ecef;
     border-radius: 10px;
     overflow: hidden;
-  }
-  
-  .progress-bar {
+}
+
+.progress-bar {
     background: linear-gradient(135deg, #8bc99b, #47d2a6);
     transition: width 0.3s ease;
     color: white;
     font-weight: bold;
     text-align: center;
-  }
+}
 
-  #flashcard-container {
-     /* width: 800px;
+#flashcard-container {
+    /* width: 800px;
    height: 80vh;
 
     justify-content: center;
     text-align: center; */
-    
-  }
-  #progress-flashcard {
-    margin:38px;
 
-  }
+}
 
-  .flashcard {
+#progress-flashcard {
+    margin: 38px;
+
+}
+
+.flashcard {
     width: 600px;
     height: 300px;
     perspective: 1000px;
     cursor: pointer;
     margin: 20px;
-    font-size: 20px;  
-  }
-  
-  .flashcard-inner {
+    font-size: 20px;
+}
+
+.flashcard-inner {
     position: relative;
     width: 100%;
     height: 100%;
     text-align: center;
     transition: transform 0.6s;
     transform-style: preserve-3d;
-  }
-  
-  .flashcard.flipped .flashcard-inner {
+}
+
+.flashcard.flipped .flashcard-inner {
     transform: rotateY(180deg);
-  }
-  
-  .flashcard-front,
-  .flashcard-back {
+}
+
+.flashcard-front,
+.flashcard-back {
     padding: 20px;
     position: absolute;
     width: 100%;
@@ -649,15 +553,19 @@
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .flashcard-front {
+}
+
+.flashcard-front {
     background-color: #ffffff;
     color: black;
-  }
-  
-  .flashcard-back {
+}
+
+.flashcard-back {
     background-color: #8bc99b;
     color: white;
     transform: rotateY(180deg);
-  }
+}
+
+.modal-content {
+    color: black !important;
+}
