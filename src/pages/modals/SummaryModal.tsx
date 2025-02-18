@@ -36,6 +36,10 @@ export default function SummaryModal({ data, onClose, onNextActivity }: SummaryM
       onClose();
     }
   };
+  
+  const HomePage = () => {
+    router.push("/HomePage")
+  }
 
   return (
     <div className="modal show d-block" tabIndex={-1}>
@@ -67,7 +71,7 @@ export default function SummaryModal({ data, onClose, onNextActivity }: SummaryM
             <button className="btn btn-secondary" onClick={onClose}>
               Cerrar
             </button>
-            <button className="btn btn-primary" onClick={handlePrint}>
+            <button className="btn btn-verde" onClick={handlePrint}>
               Imprimir Resumen
             </button>
             {onNextActivity && (
