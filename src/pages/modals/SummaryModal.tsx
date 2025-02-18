@@ -1,56 +1,83 @@
-import React, { useState } from 'react';
-import Modal from './modal';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useRouter } from 'next/router';
 
-interface Summary {
-    topic: string;
-    summary: string;
-}
 interface SummaryModalProps {
-    data: Summary[];
-    onClose: () => void;
- /*    onSave: (summaryData: { topic: string; summary: string }) => void; */
+  data: { summary: string };
+  onClose: () => void;
+  onNextActivity?: () => void;
 }
 
-export default function SummaryModal({ onClose, data }: SummaryModalProps) {
-    const [topic, setTopic] = useState('');
-    const [summary, setSummary] = useState('');
+export default function SummaryModal({ data, onClose, onNextActivity }: SummaryModalProps) {
+  const [summary, setSummary] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
-    const handleSave = () => {
-        console.log("Summary saved:");
-        /* onSave({ topic, summary });
-        onClose(); */
-    };
+  // Simular la carga del resumen desde el backend
+  useEffect(() => {
+    if (data && data.summary) {
+      setSummary(data.summary);
+      setLoading(false);
+    } else {
+      setError('No se pudo cargar el resumen.');
+      setLoading(false);
+    }
+  }, [data]);
 
-    return (
-        <Modal
-            title="Crear Resumen"
-            message="Completa la información para tu resumen."
-            onClose={onClose}
-            footer={
-                <button className="btn btn-primary" onClick={handleSave} disabled={!topic || !summary}>
-                    Guardar
-                </button>
-            }
-        >
-            <div className="mb-3">
-                <label className="form-label">Tema:</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    value={topic}
-                    onChange={(e) => setTopic(e.target.value)}
-                    placeholder="Ingrese el tema"
-                />
-            </div>
-            <div className="mb-3">
-                <label className="form-label">Resumen:</label>
-                <textarea
-                    className="form-control"
-                    value={summary}
-                    onChange={(e) => setSummary(e.target.value)}
-                    placeholder="Ingrese el resumen"
-                />
-            </div>
-        </Modal>
-    );
+  const handlePrint = () => {
+    window.print();
+  };
+
+  const handleNextActivity = () => {
+    if (onNextActivity) {
+      onNextActivity();
+    } else {
+      onClose();
+    }
+  };
+
+  return (
+    <div className="modal show d-block" tabIndex={-1}>
+      <div className="modal-dialog modal-dialog-centered modal-xl">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">Resumen de Estudio</h5>
+            <button type="button" className="btn-close" aria-label="Close" onClick={onClose}></button>
+          </div>
+          <div className="modal-body">
+            {loading ? (
+              <div className="text-center">
+                <div className="spinner-border text-primary" role="status">
+                  <span className="visually-hidden">Cargando...</span>
+                </div>
+                <p>Cargando resumen...</p>
+              </div>
+            ) : error ? (
+              <div className="alert alert-danger">{error}</div>
+            ) : (
+              <div className="summary-content">
+                {summary.split('\n').map((paragraph, index) => (
+                  <p key={index}>{paragraph}</p>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="modal-footer">
+            <button className="btn btn-secondary" onClick={onClose}>
+              Cerrar
+            </button>
+            <button className="btn btn-primary" onClick={handlePrint}>
+              Imprimir Resumen
+            </button>
+            {onNextActivity && (
+              <button className="btn btn-success" onClick={handleNextActivity}>
+                Siguiente Actividad
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
