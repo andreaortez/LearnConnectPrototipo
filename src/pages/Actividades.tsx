@@ -99,9 +99,10 @@ export default function Actividades() {
           <h2>¡Has completado todas las actividades!</h2>
 
         )}
-        
-        <button className="btn btn-verde fs-4 mt-5 p-3 rounded shadow btn-outline" onClick={VolverHomePage}>
-          Regresar
+
+        <button className="btn btn-verde fs-5 mt-5 p-3 rounded shadow btn-outline d-flex align-items-center justify-content-center" onClick={VolverHomePage}>
+          <img src="/images/hogar.png" alt="Inicio" className="me-2" width="30" height="30" />
+          Página de Inicio
         </button>
       </div>
     </>
