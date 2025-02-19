@@ -101,7 +101,7 @@ export default function Actividades() {
         )}
 
         <button className="btn btn-verde fs-5 mt-5 p-3 rounded shadow btn-outline d-flex align-items-center justify-content-center" onClick={VolverHomePage}>
-          <img src="/images/hogar.png" alt="Inicio" className="me-2" width="30" height="30" />
+          <img src="/images/hogar.png" alt="Inicio" className="me-2" width="30" height="24" />
           Página de Inicio
         </button>
       </div>
