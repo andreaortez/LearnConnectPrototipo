@@ -168,8 +168,6 @@
     font-weight: 800;
 }
 
-
-
 .overlay2 {
     position: relative;
     width: 100%;
@@ -201,18 +199,6 @@
     padding-top: 5%;
 }
 
-.contactanos {
-    background-color: #06b09a;
-    display: flex;
-    padding: 7%;
-    padding-top: 5%;
-    padding-bottom: 5%;
-    gap: 90px;
-    align-items: center;
-    align-content: center;
-    color: white;
-}
-
 #formStyle {
     width: 100%;
 }
@@ -224,17 +210,6 @@
 #contactTitle {
     padding-bottom: 2.5%;
     font-weight: 700;
-}
-
-.portadaUsuario {
-    position: relative;
-    background-image: url(/imagenes/portada.jpg);
-    background-size: cover;
-    background-position: center;
-    height: 160px;
-    display: flex;
-    color: white;
-    width: 100vw;
 }
 
 #pregunta {
@@ -319,7 +294,7 @@
 #landing {
     padding: 5%;
     background-color: #9ccc9e;
-    height: 40%;
+    height: 40vh;
     text-align: center;
     justify-items: center;
     align-content: center;
@@ -334,11 +309,12 @@
     /* background-color:rgba(158,204,158,255); */
     /* background-color:#8bc99b ; */
     background: linear-gradient(to bottom, #8bc99b, #47d2a6);
-    height: 100vh;
+    height: 60vh;
     text-align: center;
-    justify-items: center;
-    padding: 5%;
-    padding-top: 20vh;
+    justify-content: center;
+    align-items: center;
+    padding: 8%;
+    padding-top: 18vh;
     font-size: large;
     color: white;
 }

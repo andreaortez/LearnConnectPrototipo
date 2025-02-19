@@ -10,7 +10,7 @@ export default function HomePage() {
         setShowUploadModal(false);
     };
 
-   
+
     useEffect(() => {
         const initBootstrap = async () => {
             await import('bootstrap');
@@ -19,12 +19,12 @@ export default function HomePage() {
     }, []);
 
     return (
-        <div className="container-fluid ">
-            <div className="row ">
+        <div className="container-fluid m-0 p-0">
+            <div className="row m-0 p-0">
                 <aside className="col-md-3 col-lg-3 sticky-top">
                     <SideBar />
                 </aside>
-                <main id="main" className="col-md-9 ms-sm-auto col-lg-9 px-md-4">
+                <main id="main" className="col-md-9 ms-sm-auto col-lg-9" style={{ minHeight: '100vh', margin: 0, padding: 0 }}>
                     <nav id="home-header" className="navbar navbar-light bg-light d-md-none">
                         <div className="container-fluid">
                             <button className="navbar-toggler"
@@ -40,7 +40,7 @@ export default function HomePage() {
                             <span className="navbar-brand mb-0 h1 ibm-plex-sans-pSans">Homepage</span>
                         </div>
                     </nav>
-                    <section id="landing" className="pt-3 ibm-plex-sans-pSans"
+                    <section id="landing" className="bm-plex-sans-pSans"
                         style={{
                             backgroundImage: 'url("/images/banner.png")',
                             backgroundSize: 'cover',
@@ -49,15 +49,15 @@ export default function HomePage() {
                             minHeight: '300px'
                         }}
                     >
-                        <h1>Bienvenido a LearnConnect</h1>
+                        <h1>¡Bienvenido a LearnConnect!</h1>
                     </section>
                     <section id="actividades" className="pt-6 ibm-plex-sans-pSans">
                         <h2>Actividades</h2>
-                        <p className="">Sube tus archivos o anotaciones para estudiar con nuestros juegos, exámenes y flashcards
+                        <p className="p-1">Sube tus archivos o anotaciones para estudiar con nuestros juegos, exámenes y flashcards
                             generadas con IA!
                         </p>
                         <button className="btn btn-act" onClick={() => setShowUploadModal(true)}>Subir anotaciones</button>
-                      
+
                     </section>
                     {showUploadModal && (
                         <UploadModal
