@@ -44,7 +44,7 @@ a {
 }
 
 @media (min-width: 768px) {
-  #main {
+  #main,mainR {
     margin-left: 33% !important;
     padding:0.5%; 
     width: 70%;  
@@ -57,7 +57,7 @@ a {
   }
 }
 @media (min-width: 1024px) {
-  #main {
+  #main,mainR{
 
     margin-left: 33% !important;
     width: 69%; 
@@ -70,7 +70,7 @@ a {
   }
 }
 @media (min-width: 1124px) {
-  #main {
+  #main,mainR {
 
     margin-left: 25% !important;
     width: 77%; 
@@ -83,7 +83,7 @@ a {
   }
 }
 @media (min-width: 1424px) {
-  #main {
+  #main,mainR {
 
     margin-left: 10% !important;
     width: 100%; 

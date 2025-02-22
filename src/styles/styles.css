@@ -288,8 +288,13 @@
 #sidebarMenu button {
     padding: 20px;
     align-self: flex-end;
+    cursor: pointer;
 
 }
+#sidebarMeu a {
+    cursor: pointer;
+}
+
 
 #landing {
     padding: 5%;
