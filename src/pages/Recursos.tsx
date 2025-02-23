@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import SideBar from "./modals/SideBar";
+import Image from "next/image"; 
 
 export default function Recursos() {
     useEffect(() => {
@@ -15,25 +16,45 @@ export default function Recursos() {
                 <aside className="col-md-3 col-lg-3 sticky-top">
                     <SideBar />
                 </aside>
-                <main id="mainR" className="col-md-9 ms-sm-auto col-lg-9" style={{ minHeight: '100vh', margin: 0, padding: 0 }}>
-                    <nav id="home-header" className="navbar navbar-light bg-light d-md-none">
-                        <div className="container-fluid">
-                            <button className="navbar-toggler"
-                                type="button"
-                                data-bs-toggle="offcanvas"
-                                data-bs-target="#sidebarMenu"
-                                aria-controls="sidebarMenu"
-                                aria-expanded="false"
-                                aria-label="Toggle navigation">
-                                <span className="navbar-toggler-icon"></span>
-                            </button>
-                            <span className="navbar-brand mb-0 h1 ibm-plex-sans-pSans">Recursos</span>
+                {/* Main Content */}
+                <main id="mainR" className="col-md-9 ms-sm-auto col-lg-9 bg-gray-100" style={{ minHeight: '100vh' }}>
+                    <section id="recursosNav" className="py-4 px-4 rounded bg-teal-500 text-white shadow-sm">
+                        <h2 className="font-bold  mt-2"> Mis Recursos</h2>
+                        <p className="">Lista de recursos guardados aquí.</p>
+                    </section>           
+                    
+                    <section className="mt-4 p-3 bg-white rounded-lg shadow-sm">
+                        <h5 className="text-teal-700 font-bold border-bottom pb-2">📄 Flashcards</h5>
+                        <div className="d-flex gap-4 flex-wrap">
+                            {["flashcard1", "flashcard2"].map((item, index) => (
+                                <div key={index} className="p-3 text-center rounded-lg hover:shadow-md transition">
+                                    <Image src="/images/flashcard.png" alt={item} width={60} height={60} />
+                                    <p className="mt-2 text-gray-700 font-medium">{item}</p>
+                                </div>
+                            ))}
                         </div>
-                    </nav>
-
-                    <section id="recursos" className="pt-6 ibm-plex-sans-pSans">
-                        <h2>Mis Recursos</h2>
-                        <p>Lista de recursos guardados aquí.</p>
+                    </section>
+                    <section className="mt-4 p-3 bg-white rounded-lg shadow-sm">
+                        <h5 className="text-teal-700 font-bold border-bottom pb-2">📑 Resúmenes</h5>
+                        <div className="d-flex gap-4 flex-wrap">
+                            {["resumen1", "resumen2"].map((item, index) => (
+                                <div key={index} className="p-3 text-center rounded-lg hover:shadow-md transition">
+                                    <Image src="/images/summary.png" alt={item} width={60} height={60} />
+                                    <p className="mt-2 text-gray-700 font-medium">{item}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                    <section className="mt-4 p-3 bg-white rounded-lg shadow-sm">
+                        <h5 className="text-teal-700 font-bold border-bottom pb-2">📝 Exámenes</h5>
+                        <div className="d-flex gap-4 flex-wrap">
+                            {["examen1", "examen2"].map((item, index) => (
+                                <div key={index} className="p-3 text-center rounded-lg hover:shadow-md transition">
+                                    <Image src="/images/exam.png" alt={item} width={60} height={60} />
+                                    <p className="mt-2 text-gray-700 font-medium">{item}</p>
+                                </div>
+                            ))}
+                        </div>
                     </section>
                 </main>
             </div>

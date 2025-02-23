@@ -550,3 +550,31 @@ ul {
 .modal-content {
     color: black !important;
 }
+#mainR {
+    background: #f8f9fa;
+    padding: 20px;
+}
+
+#mainR h5 {
+    padding: 10px;
+    background: #82c997;
+    color: white;
+    border-radius: 5px;
+}
+
+#recursosNav {
+    color: white;
+    background-color:  #82c997;
+}
+.resource-icon {
+    display: block;
+    margin: auto;
+}
+
+.hover\:shadow-md:hover {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.transition {
+    transition: all 0.3s ease-in-out;
+}
