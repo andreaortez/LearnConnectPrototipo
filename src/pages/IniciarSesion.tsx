@@ -18,7 +18,7 @@ export default function LogIn() {
         axios.post('http://localhost:3001/IniciarSesion', { email, pass })
             .then(result => {
                 if (result.data.message === "Sesión iniciada con éxito") {
-                    localStorage.setItem('user_id', result.data.user_id);
+                    localStorage.setItem('user_id', result.data.user.id);
                     router.push('/HomePage');
                 } else {
                     setTitle("¡Error!");

@@ -551,20 +551,20 @@ ul {
     color: black !important;
 }
 #mainR {
-    background: #f8f9fa;
+    background: #82c997;
     padding: 20px;
 }
 
 #mainR h5 {
     padding: 10px;
-    background: #82c997;
+    background: #04274c;
     color: white;
     border-radius: 5px;
 }
 
 #recursosNav {
     color: white;
-    background-color:  #82c997;
+    background-color:  #04274c;
 }
 .resource-icon {
     display: block;
