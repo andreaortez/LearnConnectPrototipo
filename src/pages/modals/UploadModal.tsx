@@ -20,6 +20,9 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
   const [uploadProgress, setUploadProgress] = useState(0);
   const router = useRouter();
   const userId = localStorage.getItem("user_id");
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [preguntas, setPreguntas] = useState(0);
+  const [numeroPreguntas, setNumeroPreguntas] = useState(10);
   const [selectedOptions, setSelectedOptions] = useState<Record<OptionKeys, boolean>>({
     flashcards: false,
     resumen: false,
@@ -98,14 +101,15 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
       }
       if (selectedOptions.resumen) {
         requests.push(
-          axios.get(`${backendBaseURL}/createSummary`, { params: { path: filePath, id: userId} }).then((res) => {
+          axios.get(`${backendBaseURL}/createSummary`, { params: { path: filePath, id: userId } }).then((res) => {
             localStorage.setItem("summaryData", res.data.summary);
           }).catch((err) => console.error("Summary Error:", err))
         );
       }
       if (selectedOptions.examenPractica) {
+
         requests.push(
-          axios.get(`${backendBaseURL}/createExamen`, { params: { path: filePath, id: userId } }).then((res) => {
+          axios.get(`${backendBaseURL}/createExamen`, { params: { path: filePath, num: preguntas, id: userId } }).then((res) => {
             localStorage.setItem("examData", JSON.stringify(res.data.list));
           }).catch((err) => console.error("Exam Error:", err))
         );
@@ -165,7 +169,11 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
                     <button className={`btn btn-tipo m-2 ${selectedOptions.resumen ? "btn-selected" : ""} `}
                       onClick={() => toggleOption("resumen")}>Resumen</button>
                     <button className={`btn btn-tipo m-2 ${selectedOptions.examenPractica ? "btn-selected" : ""}`}
-                      onClick={() => toggleOption("examenPractica")}>Prueba</button>
+                      onClick={() => {
+                        toggleOption("examenPractica");
+                        setShowModal(true);
+                      }}>Prueba
+                    </button>
                   </div>
                 </>
               )}
@@ -190,6 +198,46 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
           </div>
         </div>
       </div>
-    </div>
+
+      {showModal && (
+        <div className="modal show d-block" tabIndex={-1}>
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Número de preguntas</h5>
+                <button type="button" className="btn-close" aria-label="Close" onClick={onClose}></button>
+              </div>
+              <div className="modal-body">
+                <div className="mb-3">
+                  <label htmlFor="preguntas" className="form-label">Ingrese el número de preguntas del examen</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    id="preguntas"
+                    placeholder="10"
+                    value={numeroPreguntas}
+                    onChange={(e) => setNumeroPreguntas(Number(e.target.value))}
+                  />
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary btn-outline2"
+                  onClick={() => {
+                    setShowModal(false);
+                    setPreguntas(numeroPreguntas);
+                  }}
+                >
+                  Aceptar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+      }
+    </div >
   );
-};
+}
+
