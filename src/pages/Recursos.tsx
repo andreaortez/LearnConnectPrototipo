@@ -60,11 +60,11 @@ export default function Recursos() {
     return (
         <div className="container-fluid m-0 p-0">
             <div className="row m-0 p-0">
-                <aside className="col-md-3 col-lg-3 sticky-top">
+                <aside className="col-md-3 col-lg-3 sticky-top" style={{ zIndex: 1040 }}>
                     <SideBar />
                 </aside>
 
-                <main id="mainR" className="col-md-9 ms-sm-auto col-lg-9 bg-gray-100" style={{ minHeight: '100vh' }}>
+                <main id="mainR" className="col-md-9 ms-sm-auto" style={{ minHeight: '100vh' }}>
                     <section id="recursosNav" className="py-4 px-4 rounded bg-teal-500 text-white shadow-sm">
                         <h2 className="font-bold mt-2">Mis Recursos</h2>
                         <p>Lista de recursos guardados aquí.</p>
@@ -98,9 +98,9 @@ export default function Recursos() {
                                             <div key={item._id} className="p-3 text-center rounded-lg hover:shadow-md transition"
                                                 onClick={() => router.push(`/summary/${item._id}`)} style={{ cursor: "pointer" }}>
                                                 <Image src="/images/summary.png" alt="summary" width={60} height={60} />
-                                                <p className="mt-2 text-gray-700 font-medium text-truncate" 
+                                                <p className="mt-2 text-gray-700 font-medium text-truncate"
                                                     style={{ maxWidth: "120px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                                                {item.title}</p>
+                                                    {item.title}</p>
                                             </div>
                                         ))
                                     ) : (
@@ -116,9 +116,9 @@ export default function Recursos() {
                                             <div key={item._id} className="p-3 text-center rounded-lg hover:shadow-md transition"
                                                 onClick={() => router.push(`/exam/${item._id}`)} style={{ cursor: "pointer" }}>
                                                 <Image src="/images/exam.png" alt="exam" width={60} height={60} />
-                                                <p className="mt-2 text-gray-700 font-mediumtext-truncate" 
+                                                <p className="mt-2 text-gray-700 font-mediumtext-truncate"
                                                     style={{ maxWidth: "120px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                                                {item.title}</p>
+                                                    {item.title}</p>
                                             </div>
                                         ))
                                     ) : (

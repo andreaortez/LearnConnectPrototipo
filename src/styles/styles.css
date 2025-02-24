@@ -272,6 +272,7 @@
     height: 100vh;
     position: sticky;
     top: 0;
+    width: 320px !important;
 }
 
 #sidebarMenu {
@@ -281,7 +282,7 @@
     font-size: large;
     align-items: center;
     padding: 12px;
-    max-width: 360px;
+
     position: fixed;
 }
 
@@ -289,9 +290,9 @@
     padding: 20px;
     align-self: flex-end;
     cursor: pointer;
-
 }
-#sidebarMeu a {
+
+#sidebarMenu a {
     cursor: pointer;
 }
 
@@ -550,9 +551,10 @@ ul {
 .modal-content {
     color: black !important;
 }
+
 #mainR {
     background: #82c997;
-    padding: 20px;
+    padding: 20px !important;
 }
 
 #mainR h5 {
@@ -564,8 +566,9 @@ ul {
 
 #recursosNav {
     color: white;
-    background-color:  #04274c;
+    background-color: #04274c;
 }
+
 .resource-icon {
     display: block;
     margin: auto;
@@ -577,4 +580,8 @@ ul {
 
 .transition {
     transition: all 0.3s ease-in-out;
+}
+
+.offcanvas {
+    z-index: 1050;
 }
