@@ -44,10 +44,14 @@ a {
 }
 
 @media (min-width: 768px) {
-  #main {
+  #main,mainR {
     margin-left: 33% !important;
     padding:0.5%; 
-    width: 70%;  
+    width: 65%;  
+  }
+  #mainR .col-md-9 {
+    flex: 0 0 auto;
+    width: 64% !important;
   }
   #sidebarMenu {
     width: 35%;
@@ -56,11 +60,22 @@ a {
     visibility: visible !important;
   }
 }
-@media (min-width: 1024px) {
-  #main {
 
+@media (min-width: 992px) {
+  #mainR .col-lg-9 {
+      flex: 0 0 auto;
+      width: 65% !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  #main,mainR{
     margin-left: 33% !important;
     width: 69%; 
+  }
+  #mainR .col-md-9 {
+    flex: 0 0 auto;
+    width: 62% !important;
   }
   #sidebarMenu {
     width: 35%;
@@ -70,10 +85,13 @@ a {
   }
 }
 @media (min-width: 1124px) {
-  #main {
-
+  #main,mainR {
     margin-left: 25% !important;
     width: 77%; 
+  }
+  #mainR .col-md-9 {
+    flex: 0 0 auto;
+    width: 70% !important;
   }
   #sidebarMenu {
     width: 35%;
@@ -82,17 +100,27 @@ a {
     visibility: visible !important;
   }
 }
-@media (min-width: 1424px) {
-  #main {
-
+@media (min-width: 1324px) {
+  #main,mainR {
     margin-left: 10% !important;
-    width: 100%; 
+    width: 100%;
+  }
+  #mainR .col-md-9 {
+    flex: 0 0 auto;
+    width: 74% !important;
   }
   #sidebarMenu {
-    width: 35%;
+    width: 35% !important;
     position: fixed !important;
     transform: none !important;
     visibility: visible !important;
+  }
+}
+@media (min-width: 1624px) {
+
+  #mainR .col-md-9 {
+    flex: 0 0 auto;
+    width: 77% !important;
   }
 }
 

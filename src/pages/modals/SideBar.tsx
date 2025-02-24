@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Image from "next/image";
+import { useRouter } from 'next/router';
 
 const Sidebar: React.FC = () => {
+  const router = useRouter();
     return (
       <div
         className="offcanvas offcanvas-start ${styles['custom-sidebar']}"  
@@ -28,8 +30,8 @@ const Sidebar: React.FC = () => {
         </div>
         <div className="offcanvas-body ">
           <ul className="nav flex-column">
-            <li className="nav-item">
-              <a className="nav-link text-dark" href="#landing">Inicio</a>
+            <li className="nav-item"> 
+              <a className="nav-link text-dark" style={{ cursor: "pointer" }}  onClick={() => router.push("/HomePage")}>Inicio</a>
             </li>
             <li className="nav-item">
               <a className="nav-link text-dark" href="#actividades">Actividades</a>
@@ -38,7 +40,7 @@ const Sidebar: React.FC = () => {
               <a className="nav-link text-dark" href="#perfil">Mi Perfil</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link text-dark" href="#recursos">Recursos</a>
+              <a className="nav-link text-dark" style={{ cursor: "pointer" }} onClick={() => router.push("/Recursos")}>Recursos</a>
             </li>
             <li className="nav-item">
               <a className="nav-link text-dark" href="#soporte">Soporte</a>

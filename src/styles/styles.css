@@ -288,8 +288,13 @@
 #sidebarMenu button {
     padding: 20px;
     align-self: flex-end;
+    cursor: pointer;
 
 }
+#sidebarMeu a {
+    cursor: pointer;
+}
+
 
 #landing {
     padding: 5%;
@@ -544,4 +549,32 @@ ul {
 
 .modal-content {
     color: black !important;
+}
+#mainR {
+    background: #82c997;
+    padding: 20px;
+}
+
+#mainR h5 {
+    padding: 10px;
+    background: #04274c;
+    color: white;
+    border-radius: 5px;
+}
+
+#recursosNav {
+    color: white;
+    background-color:  #04274c;
+}
+.resource-icon {
+    display: block;
+    margin: auto;
+}
+
+.hover\:shadow-md:hover {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.transition {
+    transition: all 0.3s ease-in-out;
 }

@@ -19,6 +19,7 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const router = useRouter();
+  const userId = localStorage.getItem("user_id");
   const [selectedOptions, setSelectedOptions] = useState<Record<OptionKeys, boolean>>({
     flashcards: false,
     resumen: false,
@@ -56,6 +57,10 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
   };
 
   const handleUploadAndGenerate = async () => {
+    if (!userId) {
+      console.error("User ID not found!");
+      return;
+    }
     setUploading(true);
     try {
       const formData = new FormData();
@@ -64,6 +69,12 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
       // Upload file to /api/upload
       const uploadResponse = await axios.post("/api/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
+        onUploadProgress: (progressEvent) => {
+          if (progressEvent.total) {
+            const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+            setUploadProgress(percentCompleted);
+          }
+        },
       });
 
       const filePath = uploadResponse.data.path;
@@ -79,7 +90,7 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
       const requests = [];
       if (selectedOptions.flashcards) {
         requests.push(
-          axios.get(`${backendBaseURL}/createFlashcards`, { params: { path: filePath } }).then((res) => {
+          axios.get(`${backendBaseURL}/createFlashcards`, { params: { path: filePath, id: userId } }).then((res) => {
             localStorage.setItem("flashcardData", JSON.stringify(res.data.list));
             console.log("Flashcards");
           }).catch((err) => console.error("Flashcard Error:", err))
@@ -87,14 +98,14 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
       }
       if (selectedOptions.resumen) {
         requests.push(
-          axios.get(`${backendBaseURL}/createSummary`, { params: { path: filePath } }).then((res) => {
+          axios.get(`${backendBaseURL}/createSummary`, { params: { path: filePath, id: userId} }).then((res) => {
             localStorage.setItem("summaryData", res.data.summary);
           }).catch((err) => console.error("Summary Error:", err))
         );
       }
       if (selectedOptions.examenPractica) {
         requests.push(
-          axios.get(`${backendBaseURL}/createExamen`, { params: { path: filePath } }).then((res) => {
+          axios.get(`${backendBaseURL}/createExamen`, { params: { path: filePath, id: userId } }).then((res) => {
             localStorage.setItem("examData", JSON.stringify(res.data.list));
           }).catch((err) => console.error("Exam Error:", err))
         );
