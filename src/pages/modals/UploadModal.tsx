@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from 'next/router';
+import ModalDetails from './modalDetails';
 
 interface UploadModalProps {
   onClose: () => void;
@@ -20,14 +21,37 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
   const [uploadProgress, setUploadProgress] = useState(0);
   const router = useRouter();
   const userId = localStorage.getItem("user_id");
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const [preguntas, setPreguntas] = useState(0);
-  const [numeroPreguntas, setNumeroPreguntas] = useState(10);
   const [selectedOptions, setSelectedOptions] = useState<Record<OptionKeys, boolean>>({
     flashcards: false,
     resumen: false,
     examenPractica: false,
   });
+  const [preguntas, setPreguntas] = useState(0);
+
+  //atributos de las flashcards
+  const [showModalF, setShowModalF] = useState<boolean>(false);
+  const [tarjetas, setTarjetas] = useState(0);
+  const [formato, setFormato] = useState<string>("");
+  const [dificultad, setDificultad] = useState<string>("");
+
+  //atributos del resumen
+  const [showModalR, setShowModalR] = useState<boolean>(false);
+  const [palabras, setPalabras] = useState(0);
+  const [redaccion, setRedaccion] = useState<string>("");
+  const [enfoque, setEnfoque] = useState<string>("");
+
+  //atributos de los examenes
+  const [showModalE, setShowModalE] = useState<boolean>(false);
+  const [numeroPreguntas, setNumeroPreguntas] = useState(10);
+  const [Ndificultad, setNdificultad] = useState<string>("");
+  const tiposPreguntas = ["Opción Múltiple", "Verdadero/Falso", "Selección Única"];
+  const [seleccionadas, setSeleccionadas] = useState<string[]>([]);
+
+  const handleCheckboxChange = (tipo: string) => {
+    setSeleccionadas((prev) =>
+      prev.includes(tipo) ? prev.filter((item) => item !== tipo) : [...prev, tipo]
+    );
+  };
 
   const toggleOption = (option: OptionKeys) => {
     setSelectedOptions((prev) => ({
@@ -165,13 +189,21 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
                   <h5 className="mx-2">Generar:</h5>
                   <div id="btngroup-subir" className="fade-in m-3  ">
                     <button className={`btn btn-tipo m-2 ${selectedOptions.flashcards ? "btn-selected" : ""} `}
-                      onClick={() => toggleOption("flashcards")}>Flashcards</button>
+                      onClick={() => {
+                        toggleOption("flashcards")
+                        setShowModalF(true);
+                      }}>Flashcards
+                    </button>
                     <button className={`btn btn-tipo m-2 ${selectedOptions.resumen ? "btn-selected" : ""} `}
-                      onClick={() => toggleOption("resumen")}>Resumen</button>
+                      onClick={() => {
+                        toggleOption("resumen")
+                        setShowModalR(true);
+                      }}>Resumen
+                    </button>
                     <button className={`btn btn-tipo m-2 ${selectedOptions.examenPractica ? "btn-selected" : ""}`}
                       onClick={() => {
                         toggleOption("examenPractica");
-                        setShowModal(true);
+                        setShowModalE(true);
                       }}>Prueba
                     </button>
                   </div>
@@ -199,44 +231,191 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
         </div>
       </div>
 
-      {showModal && (
-        <div className="modal show d-block" tabIndex={-1}>
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Número de preguntas</h5>
-                <button type="button" className="btn-close" aria-label="Close" onClick={onClose}></button>
+      {/* Detalle de las Flashcards */}
+      {showModalF && (
+        <ModalDetails
+          title="Configura tus Flashcards"
+          content={
+            <div className="mb-2 ">
+              <div className="input-group mb-4 mt-2">
+                <span className="input-group-text" id="label-tarjetas">Cantidad de tarjetas</span>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="tarjetas"
+                  placeholder="10"
+                  value={tarjetas}
+                  onChange={(e) => setTarjetas(Number(e.target.value))}
+                />
               </div>
-              <div className="modal-body">
-                <div className="mb-3">
-                  <label htmlFor="preguntas" className="form-label">Ingrese el número de preguntas del examen</label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    id="preguntas"
-                    placeholder="10"
-                    value={numeroPreguntas}
-                    onChange={(e) => setNumeroPreguntas(Number(e.target.value))}
-                  />
-                </div>
+
+              <div className="input-group mb-4">
+                <span className="input-group-text" id="label-formato">Formato</span>
+                <select
+                  className="form-select"
+                  id="formato"
+                  value={formato}
+                  onChange={(e) => setFormato(e.target.value)}>
+                  <option value="pregunta-respuesta">Pregunta-respuesta</option>
+                  <option value="término-definición">Termino definición</option>
+                </select>
               </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary btn-outline2"
-                  onClick={() => {
-                    setShowModal(false);
-                    setPreguntas(numeroPreguntas);
-                  }}
-                >
-                  Aceptar
-                </button>
+
+              <div className="input-group">
+                <span className="input-group-text" id="label-dificultad">Dificultad</span>
+                <select
+                  className="form-select"
+                  id="dificultad"
+                  value={dificultad}
+                  onChange={(e) => setDificultad(e.target.value)}>
+                  <option value="Básico">Básico</option>
+                  <option value="Intermedio">Intermedio</option>
+                  <option value="Avanzado">Avanzado</option>
+                </select>
               </div>
             </div>
-          </div>
-        </div>
-      )
-      }
+          }
+          footer={
+            <button
+              type="button"
+              className="btn btn-secondary btn-outline2"
+              onClick={() => setShowModalF(false)}
+            >
+              Aceptar
+            </button>
+          }
+          onClose={() => setShowModalF(false)} />
+      )}
+
+      {/* Detalle de los resumenes */}
+      {showModalR && (
+        <ModalDetails
+          title="Configura tu resumen"
+          content={
+            <div className="mb-2 ">
+              <div className="input-group mb-4 mt-2">
+                <span className="input-group-text" id="label-extension">Número de palabras</span>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="extension"
+                  placeholder="10"
+                  value={palabras}
+                  onChange={(e) => setPalabras(Number(e.target.value))}
+                />
+              </div>
+
+              <div className="input-group mb-4">
+                <span className="input-group-text" id="label-redaccion">Estilo de redacción</span>
+                <select
+                  className="form-select"
+                  id="redaccion"
+                  value={redaccion}
+                  onChange={(e) => setRedaccion(e.target.value)}>
+                  <option value="formal">Formal</option>
+                  <option value="academico">Académico</option>
+                  <option value="esquematico">Esquemático (bullet points)</option>
+                </select>
+              </div>
+
+              <div className="input-group">
+                <span className="input-group-text" id="label-enfoque">Enfoque</span>
+                <select
+                  className="form-select"
+                  id="enfoque"
+                  value={enfoque}
+                  onChange={(e) => setEnfoque(e.target.value)}>
+                  <option value="Conceptual">Conceptual</option>
+                  <option value="Práctico">Práctico</option>
+                  <option value="Con ejemplos">Con ejemplos</option>
+                  <option value="Con definiciones clave">Con definiciones clave</option>
+                </select>
+              </div>
+            </div>
+          }
+          footer={
+            <button
+              type="button"
+              className="btn btn-secondary btn-outline2"
+              onClick={() => setShowModalR(false)}
+            >
+              Aceptar
+            </button>
+          }
+          onClose={() => setShowModalR(false)} />
+      )}
+
+      {/* Detalle de los examenes */}
+      {showModalE && (
+        <ModalDetails
+          title="Configura tu examen"
+          content={
+            <div className="mb-2 ">
+              <div className="input-group mb-4 mt-2">
+                <span className="input-group-text" id="label-preguntas">Cantidad de preguntas</span>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="preguntas"
+                  placeholder="10"
+                  value={numeroPreguntas}
+                  onChange={(e) => setNumeroPreguntas(Number(e.target.value))}
+                />
+              </div>
+
+              <div className="input-group mb-4">
+                <span className="mb-3" id="label-preguntas">Tipo de preguntas</span>
+                <div className="d-flex flex-column w-100">
+                  {tiposPreguntas.map((tipo, index) => (
+                    <div key={index} className="input-group mb-2">
+                      <div className="input-group-text">
+                        <input
+                          className="form-check-input mt-0"
+                          type="checkbox"
+                          value={tipo}
+                          id={`checkbox-${index}`}
+                          checked={seleccionadas.includes(tipo)}
+                          onChange={() => handleCheckboxChange(tipo)}
+                        />
+                      </div>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id={`label-${index}`}
+                        placeholder={tipo}
+                        disabled={!seleccionadas.includes(tipo)} // Deshabilita si no está seleccionado
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+
+              <div className="input-group">
+                <span className="input-group-text" id="label-Ndificultad">Nivel de dificultad</span>
+                <select
+                  className="form-select"
+                  id="Ndificultad"
+                  value={Ndificultad}
+                  onChange={(e) => setNdificultad(e.target.value)}>
+                  <option value="Básico">Básico</option>
+                  <option value="Intermedio">Intermedio</option>
+                  <option value="Avanzado">Avanzado</option>
+                </select>
+              </div>
+            </div>
+          }
+          footer={
+            <button
+              type="button"
+              className="btn btn-secondary btn-outline2"
+              onClick={() => setShowModalE(false)}
+            >
+              Aceptar
+            </button>
+          }
+          onClose={() => setShowModalE(false)} />
+      )}
     </div >
   );
 }
