@@ -27,9 +27,9 @@ export default function Recursos() {
     const [exams, setExams] = useState<Exam[]>([]);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
+    const userId = localStorage.getItem("user_id");
 
     useEffect(() => {
-        const userId = localStorage.getItem("user_id");
         if (!userId) {
             console.error("User ID not found!");
             return;
@@ -57,6 +57,66 @@ export default function Recursos() {
         fetchResources();
     }, []);
 
+    const openSummary = async (summaryID: string) => {
+        if (!userId) {
+            console.error("User ID not found!");
+            return;
+        }
+
+        try {
+            const response = await axios.get("http://localhost:3001/getSummary", {
+                params: { id: userId, item_id: summaryID },
+            });
+            sessionStorage.setItem("summary", "true");
+            sessionStorage.setItem("summaryData", JSON.stringify(response.data.resultado[0]))
+            router.push("/Actividades");
+        } catch (error) {
+            console.error("Error fetching resources:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const openExam = async (examID: string) => {
+        if (!userId) {
+            console.error("User ID not found!");
+            return;
+        }
+
+        try {
+            const response = await axios.get("http://localhost:3001/getExam", {
+                params: { id: userId, item_id: examID },
+            });
+            sessionStorage.setItem("exam", "true");
+            sessionStorage.setItem("examData", JSON.stringify(response.data.resultado))
+            router.push("/Actividades");
+        } catch (error) {
+            console.error("Error fetching resources:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const openFlashcard = async (examID: string) => {
+        if (!userId) {
+            console.error("User ID not found!");
+            return;
+        }
+
+        try {
+            const response = await axios.get("http://localhost:3001/getFlashcard", {
+                params: { id: userId, item_id: examID },
+            });
+            sessionStorage.setItem("flashcard", "true");
+            sessionStorage.setItem("flashcardData", JSON.stringify(response.data.resultado))
+            router.push("/Actividades");
+        } catch (error) {
+            console.error("Error fetching resources:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="container-fluid m-0 p-0">
             <div className="row m-0 p-0">
@@ -80,7 +140,7 @@ export default function Recursos() {
                                     {flashcards.length > 0 ? (
                                         flashcards.map((item) => (
                                             <div key={item._id} className="p-3 text-center rounded-lg hover:shadow-md transition"
-                                                onClick={() => router.push(`/flashcards/${item._id}`)} style={{ cursor: "pointer" }}>
+                                                onClick={() => openFlashcard(item._id)} style={{ cursor: "pointer" }}>
                                                 <Image src="/images/flashcard.png" alt="flashcard" width={60} height={60} />
                                                 <p className="mt-2 text-gray-700 font-medium">Flashcard Set</p>
                                             </div>
@@ -96,7 +156,7 @@ export default function Recursos() {
                                     {summaries.length > 0 ? (
                                         summaries.map((item) => (
                                             <div key={item._id} className="p-3 text-center rounded-lg hover:shadow-md transition"
-                                                onClick={() => router.push(`/summary/${item._id}`)} style={{ cursor: "pointer" }}>
+                                                onClick={() => openSummary(item._id)} style={{ cursor: "pointer" }}>
                                                 <Image src="/images/summary.png" alt="summary" width={60} height={60} />
                                                 <p className="mt-2 text-gray-700 font-medium text-truncate"
                                                     style={{ maxWidth: "120px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
@@ -114,7 +174,7 @@ export default function Recursos() {
                                     {exams.length > 0 ? (
                                         exams.map((item) => (
                                             <div key={item._id} className="p-3 text-center rounded-lg hover:shadow-md transition"
-                                                onClick={() => router.push(`/exam/${item._id}`)} style={{ cursor: "pointer" }}>
+                                                onClick={() => openExam(item._id)} style={{ cursor: "pointer" }}>
                                                 <Image src="/images/exam.png" alt="exam" width={60} height={60} />
                                                 <p className="mt-2 text-gray-700 font-mediumtext-truncate"
                                                     style={{ maxWidth: "120px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>

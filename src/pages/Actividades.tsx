@@ -3,7 +3,6 @@ import ExamModal from './modals/ExamModal'
 import FlashcardModal from './modals/FlashcardModal'
 import SummaryModal from './modals/SummaryModal'
 import { useState, useEffect } from "react";
-import HomePage from './HomePage';
 import { useRouter } from 'next/router';
 
 interface activities {
@@ -28,6 +27,12 @@ export default function Actividades() {
 
   const router = useRouter();
   const VolverHomePage = () => {
+    sessionStorage.removeItem("flashcardData");
+    sessionStorage.removeItem("summaryData");
+    sessionStorage.removeItem("examData");
+    sessionStorage.removeItem("flashcard");
+    sessionStorage.removeItem("summary");
+    sessionStorage.removeItem("exam");
     router.push("/HomePage")
   }
   const [currentStep, setCurrentStep] = useState<number>(0);
@@ -38,9 +43,9 @@ export default function Actividades() {
   });
 
   useEffect(() => {
-    const flashcardStorage = localStorage.getItem("flashcard") === "true" ? true : false;
-    const summaryStorage = localStorage.getItem("summary") === "true" ? true : false;
-    const examStorage = localStorage.getItem("exam") === "true" ? true : false;
+    const flashcardStorage = sessionStorage.getItem("flashcard") === "true" ? true : false;
+    const summaryStorage = sessionStorage.getItem("summary") === "true" ? true : false;
+    const examStorage = sessionStorage.getItem("exam") === "true" ? true : false;
 
 
     setSelectedOptions({
@@ -49,9 +54,9 @@ export default function Actividades() {
       exam: examStorage,
     });
 
-    const flashcardData = localStorage.getItem("flashcardData");
-    const summaryData = localStorage.getItem("summaryData");
-    const examData = localStorage.getItem("examData");
+    const flashcardData = sessionStorage.getItem("flashcardData");
+    const summaryData = sessionStorage.getItem("summaryData");
+    const examData = sessionStorage.getItem("examData");
 
     
 
@@ -98,7 +103,6 @@ export default function Actividades() {
           />
         ) : (
           <h2>¡Has completado todas las actividades!</h2>
-
         )}
 
         <button className="btn btn-verde fs-5 mt-5 p-3 rounded shadow btn-outline d-flex align-items-center justify-content-center" onClick={VolverHomePage}>

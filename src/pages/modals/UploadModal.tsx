@@ -111,15 +111,15 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
       const backendBaseURL = "http://localhost:3001";
 
       // guarda que optiones escogio el usuario en local storage
-      localStorage.setItem("flashcard", selectedOptions.flashcards.toString());
-      localStorage.setItem("summary", selectedOptions.resumen.toString());
-      localStorage.setItem("exam", selectedOptions.examenPractica.toString());
+      sessionStorage.setItem("flashcard", selectedOptions.flashcards.toString());
+      sessionStorage.setItem("summary", selectedOptions.resumen.toString());
+      sessionStorage.setItem("exam", selectedOptions.examenPractica.toString());
 
       const requests = [];
       if (selectedOptions.flashcards) {
         requests.push(
           axios.get(`${backendBaseURL}/createFlashcards`, { params: { path: filePath, id: userId } }).then((res) => {
-            localStorage.setItem("flashcardData", JSON.stringify(res.data.list));
+            sessionStorage.setItem("flashcardData", JSON.stringify(res.data.list));
             console.log("Flashcards");
           }).catch((err) => console.error("Flashcard Error:", err))
         );
@@ -127,7 +127,7 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
       if (selectedOptions.resumen) {
         requests.push(
           axios.get(`${backendBaseURL}/createSummary`, { params: { path: filePath, id: userId } }).then((res) => {
-            localStorage.setItem("summaryData", res.data.summary);
+            sessionStorage.setItem("summaryData", res.data.summary);
           }).catch((err) => console.error("Summary Error:", err))
         );
       }
@@ -151,7 +151,7 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
         } else {
           requests.push(
             axios.get(`${backendBaseURL}/createExamen`, { params: { path: filePath, num: preguntas, id: userId } }).then((res) => {
-              localStorage.setItem("examData", JSON.stringify(res.data.list));
+              sessionStorage.setItem("examData", JSON.stringify(res.data.list));
             }).catch((err) => console.error("Exam Error:", err))
           );
         }
