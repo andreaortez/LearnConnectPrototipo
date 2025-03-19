@@ -15,6 +15,7 @@ interface UploadModalProps {
 }
 
 export default function UploadModal({ onClose, onFileUpload }: UploadModalProps) {
+  const isPremium = true; // en duro para probar funciones premium 
   const [dragging, setDragging] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [uploading, setUploading] = useState(false);
@@ -132,11 +133,28 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
       }
       if (selectedOptions.examenPractica) {
 
-        requests.push(
-          axios.get(`${backendBaseURL}/createExamen`, { params: { path: filePath, num: preguntas, id: userId } }).then((res) => {
-            localStorage.setItem("examData", JSON.stringify(res.data.list));
-          }).catch((err) => console.error("Exam Error:", err))
-        );
+        if (isPremium) {
+          // para usuarios premium 
+          requests.push(
+            axios.get(`${backendBaseURL}/createExamenPremium`, {
+              params: {
+                path: filePath,
+                id: userId,
+                num: numeroPreguntas,
+                dificultad: dificultad,
+                multipleChoice: tiposPreguntas.includes("Selección Única"),
+                multipleAnswer: tiposPreguntas.includes("Opción Múltiple"),
+                trueFalse: tiposPreguntas.includes("Verdadero/Falso"),
+              },
+            })
+          );
+        } else {
+          requests.push(
+            axios.get(`${backendBaseURL}/createExamen`, { params: { path: filePath, num: preguntas, id: userId } }).then((res) => {
+              localStorage.setItem("examData", JSON.stringify(res.data.list));
+            }).catch((err) => console.error("Exam Error:", err))
+          );
+        }
       }
 
       await Promise.all(requests);
@@ -191,19 +209,19 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
                     <button className={`btn btn-tipo m-2 ${selectedOptions.flashcards ? "btn-selected" : ""} `}
                       onClick={() => {
                         toggleOption("flashcards")
-                        setShowModalF(true);
+                        {isPremium?setShowModalF(true):setShowModalF(false)}
                       }}>Flashcards
                     </button>
                     <button className={`btn btn-tipo m-2 ${selectedOptions.resumen ? "btn-selected" : ""} `}
                       onClick={() => {
                         toggleOption("resumen")
-                        setShowModalR(true);
+                        {isPremium?setShowModalR(true):setShowModalR(false)}
                       }}>Resumen
                     </button>
                     <button className={`btn btn-tipo m-2 ${selectedOptions.examenPractica ? "btn-selected" : ""}`}
                       onClick={() => {
                         toggleOption("examenPractica");
-                        setShowModalE(true);
+                        {isPremium?setShowModalE(true):setShowModalE(false)}
                       }}>Prueba
                     </button>
                   </div>

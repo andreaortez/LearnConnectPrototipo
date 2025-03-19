@@ -53,6 +53,7 @@ export default function Actividades() {
     const summaryData = localStorage.getItem("summaryData");
     const examData = localStorage.getItem("examData");
 
+    
 
     setContent({
       flashcards: flashcardData ? JSON.parse(flashcardData) : null,
