@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 
 interface SummaryModalProps {
-  data: { summary: string };
+  data: { title: string; summary: string };
   onClose: () => void;
   onNextActivity?: () => void;
 }
@@ -36,7 +36,7 @@ export default function SummaryModal({ data, onClose, onNextActivity }: SummaryM
       onClose();
     }
   };
-  
+
   const HomePage = () => {
     router.push("/HomePage")
   }
@@ -46,7 +46,7 @@ export default function SummaryModal({ data, onClose, onNextActivity }: SummaryM
       <div className="modal-dialog modal-dialog-centered modal-xl">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title">Resumen de Estudio</h5>
+            <h5 className="modal-title">{data.title}</h5>
             <button type="button" className="btn-close" aria-label="Close" onClick={onClose}></button>
           </div>
           <div className="modal-body">

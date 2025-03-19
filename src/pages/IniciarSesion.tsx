@@ -14,6 +14,7 @@ export default function LogIn() {
     const [message, setMessage] = useState<string>('');
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+        localStorage.clear();
         e.preventDefault();
         axios.post('http://localhost:3001/IniciarSesion', { email, pass })
             .then(result => {
