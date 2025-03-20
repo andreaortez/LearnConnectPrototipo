@@ -21,7 +21,7 @@ export default function HomePage() {
     return (
         <div className="container-fluid m-0 p-0">
             <div className="row m-0 p-0">
-                <aside className="col-lg-3 sticky-top d-lg-block d-none">
+                <aside className="col-lg-3 sticky-top d-lg-block d-md-none">
                     <SideBar />
                 </aside>
                 <main id="main" className="col-12 col-lg-9 ms-sm-auto" style={{ minHeight: '100vh', margin: 0, padding: 0 }}>

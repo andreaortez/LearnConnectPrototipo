@@ -52,7 +52,7 @@ a {
     flex: 0 0 auto;
     width: 64% !important;
   }
-
+ 
   #sidebarMenu {
     width: 35%;
     position: fixed !important;
@@ -88,7 +88,7 @@ a {
 
   #main,
   mainR {
-    margin-left: 33% !important;
+    margin-left: 31% !important;
     width: 69%;
   }
 
@@ -140,7 +140,6 @@ a {
   }
 
   #sidebarMenu {
-    width: 35% !important;
     position: fixed !important;
     transform: none !important;
     visibility: visible !important;

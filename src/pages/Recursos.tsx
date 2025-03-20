@@ -31,6 +31,13 @@ export default function Recursos() {
     const [isPremium, setIsPremium] = useState(true);
 
     useEffect(() => {
+        const initBootstrap = async () => {
+            await import('bootstrap');
+        };
+        initBootstrap();
+    }, []);
+
+    useEffect(() => {
         if (typeof window !== "undefined") {
             const storedUserId = localStorage.getItem("user_id");
             if (storedUserId) {
@@ -139,10 +146,10 @@ export default function Recursos() {
     return (
         <div className="container-fluid m-0 p-0">
             <div className="row m-0 p-0">
-                <aside className="col-md-3 col-lg-3 sticky-top" style={{ zIndex: 1040 }}>
+                <aside className="col-lg-3 sticky-top d-lg-block d-md-none">
                     <SideBar />
                 </aside>
-                <nav id="home-header" className="navbar navbar-light bg-light d-md-none">
+                <nav id="home-header" className="navbar navbar-light bg-light d-lg-none">
                     <div className="container-fluid">
                         <button className="navbar-toggler"
                             type="button"
@@ -157,7 +164,7 @@ export default function Recursos() {
                         <span className="navbar-brand mb-0 h1 ibm-plex-sans-pSans">Recursos</span>
                     </div>
                 </nav>
-                <main id="mainR" className="col-md-9 ms-sm-auto" style={{ minHeight: '100vh' }}>
+                <main id="mainR" className="col-12 col-lg-9 ms-sm-auto 100vw" style={{ minHeight: '100vh' }}>
                 
                     <section id="recursosNav" className="py-4 px-4 rounded bg-teal-500 text-white shadow-sm">
                         <h2 className="font-bold mt-2">Mis Recursos</h2>
