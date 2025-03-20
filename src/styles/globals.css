@@ -59,6 +59,22 @@ a {
     transform: none !important;
     visibility: visible !important;
   }
+  .resource-grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
+
+  .resource-item {
+    max-width: 140px;
+    padding: 8px;
+  }
+
+  .resource-item img {
+    width: 50px; 
+  }
+
+  .resource-title {
+    font-size: 0.75rem; 
+  }
 }
 
 @media (min-width: 992px) {

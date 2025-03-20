@@ -142,8 +142,23 @@ export default function Recursos() {
                 <aside className="col-md-3 col-lg-3 sticky-top" style={{ zIndex: 1040 }}>
                     <SideBar />
                 </aside>
-
+                <nav id="home-header" className="navbar navbar-light bg-light d-md-none">
+                    <div className="container-fluid">
+                        <button className="navbar-toggler"
+                            type="button"
+                            data-bs-toggle="offcanvas"
+                            data-bs-target="#sidebarMenu"
+                            aria-controls="sidebarMenu"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation"
+                        >
+                            <span className="navbar-toggler-icon"></span>
+                        </button>
+                        <span className="navbar-brand mb-0 h1 ibm-plex-sans-pSans">Recursos</span>
+                    </div>
+                </nav>
                 <main id="mainR" className="col-md-9 ms-sm-auto" style={{ minHeight: '100vh' }}>
+                
                     <section id="recursosNav" className="py-4 px-4 rounded bg-teal-500 text-white shadow-sm">
                         <h2 className="font-bold mt-2">Mis Recursos</h2>
                         <p>Lista de recursos guardados aquí.</p>
@@ -155,56 +170,64 @@ export default function Recursos() {
                         <>
                             <section className="mt-4 p-3 bg-white rounded shadow-sm">
                                 <h5 className="text-teal-700 font-bold border-bottom pb-2">📄 Flashcards</h5>
-                                <div className="d-flex gap-4 flex-wrap">
+                                <div className="resource-grid">
                                     {flashcards.length > 0 ? (
-                                        flashcards.map((item) => (
-                                            <div key={item._id} className="p-3 text-center rounded-lg hover:shadow-md transition"
-                                                onClick={() => openFlashcard(item._id)} style={{ cursor: "pointer" }}>
-                                                <Image src="/images/flashcard.png" alt="flashcard" width={60} height={60} />
-                                                <p className="mt-2 text-gray-700 font-medium">Flashcard Set</p>
-                                            </div>
-                                        ))
+                                    flashcards.map((item) => (
+                                        <div
+                                        key={item._id}
+                                        className="resource-item"
+                                        onClick={() => openFlashcard(item._id)}
+                                        >
+                                        <Image src="/images/flashcard.png" alt="flashcard" width={60} height={60} />
+                                        <p className="resource-title">Flashcard Set</p>
+                                        </div>
+                                    ))
                                     ) : (
-                                        <p className="text-muted">No hay flashcards guardadas.</p>
+                                    <p className="text-muted text-center w-100">No hay flashcards guardadas.</p>
                                     )}
                                 </div>
-                            </section>
-                            <section className="mt-4 p-3 bg-white rounded shadow-sm">
+                                </section>
+
+                                <section className="mt-4 p-3 bg-white rounded shadow-sm">
                                 <h5 className="text-teal-700 font-bold border-bottom pb-2">📑 Resúmenes</h5>
-                                <div className="d-flex gap-4 flex-wrap">
+                                <div className="resource-grid">
                                     {summaries.length > 0 ? (
-                                        summaries.map((item) => (
-                                            <div key={item._id} className="p-3 text-center rounded-lg hover:shadow-md transition"
-                                                onClick={() => openSummary(item._id)} style={{ cursor: "pointer" }}>
-                                                <Image src="/images/summary.png" alt="summary" width={60} height={60} />
-                                                <p className="mt-2 text-gray-700 font-medium text-truncate"
-                                                    style={{ maxWidth: "120px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                                                    {item.title}</p>
-                                            </div>
-                                        ))
+                                    summaries.map((item) => (
+                                        <div
+                                        key={item._id}
+                                        className="resource-item"
+                                        onClick={() => openSummary(item._id)}
+                                        >
+                                        <Image src="/images/summary.png" alt="summary" width={60} height={60} />
+                                        <p className="resource-title">{item.title}</p>
+                                        </div>
+                                    ))
                                     ) : (
-                                        <p className="text-muted">No hay resúmenes guardados.</p>
+                                    <p className="text-muted text-center w-100">No hay resúmenes guardados.</p>
                                     )}
                                 </div>
-                            </section>
-                            <section className="mt-4 p-3 bg-white rounded shadow-sm">
+                                </section>
+
+                                <section className="mt-4 p-3 bg-white rounded shadow-sm">
                                 <h5 className="text-teal-700 font-bold border-bottom pb-2">📝 Exámenes</h5>
-                                <div className="d-flex gap-4 flex-wrap">
+                                <div className="resource-grid">
                                     {exams.length > 0 ? (
-                                        exams.map((item) => (
-                                            <div key={item._id} className="p-3 text-center rounded-lg hover:shadow-md transition"
-                                                onClick={() => openExam(item._id)} style={{ cursor: "pointer" }}>
-                                                <Image src="/images/exam.png" alt="exam" width={60} height={60} />
-                                                <p className="mt-2 text-gray-700 font-mediumtext-truncate"
-                                                    style={{ maxWidth: "120px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                                                    {item.title}</p>
-                                            </div>
-                                        ))
+                                    exams.map((item) => (
+                                        <div
+                                        key={item._id}
+                                        className="resource-item"
+                                        onClick={() => openExam(item._id)}
+                                        >
+                                        <Image src="/images/exam.png" alt="exam" width={60} height={60} />
+                                        <p className="resource-title">{item.title}</p>
+                                        </div>
+                                    ))
                                     ) : (
-                                        <p className="text-muted">No hay exámenes guardados.</p>
+                                    <p className="text-muted text-center w-100">No hay exámenes guardados.</p>
                                     )}
                                 </div>
-                            </section>
+                                </section>
+
                         </>
                     )}
                 </main>

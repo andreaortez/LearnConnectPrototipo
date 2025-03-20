@@ -636,3 +636,43 @@ ul {
     display: block;
     margin: 20px auto 0;
   }
+  .resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .resource-item {
+    
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    width: 100%;
+     max-width: 180px;
+    
+  }
+  
+  .resource-item:hover {
+    transform: scale(1.05);
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .resource-title {
+    margin-top: 8px;
+    font-weight: 500;
+    color: #333;
+    max-width: 100%;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .resource-item img {
+    width: 70px; 
+    height: auto;
+  }

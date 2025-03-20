@@ -28,6 +28,8 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
     examenPractica: false,
   });
   const [preguntas, setPreguntas] = useState(0);
+  const [showConfigurations, setShowConfigurations] = useState(false);
+
 
   //atributos de las flashcards
   const [showModalF, setShowModalF] = useState<boolean>(false);
@@ -53,6 +55,10 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
       prev.includes(tipo) ? prev.filter((item) => item !== tipo) : [...prev, tipo]
     );
   };
+// para mostrar configuraciones premium a aplicar a los recursos
+  const handleModalClose = () => {
+    setShowConfigurations(true);
+  };  
 
   const toggleOption = (option: OptionKeys) => {
     setSelectedOptions((prev) => ({
@@ -116,20 +122,62 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
       sessionStorage.setItem("exam", selectedOptions.examenPractica.toString());
 
       const requests = [];
-      if (selectedOptions.flashcards) {
-        requests.push(
-          axios.get(`${backendBaseURL}/createFlashcards`, { params: { path: filePath, id: userId } }).then((res) => {
-            sessionStorage.setItem("flashcardData", JSON.stringify(res.data.list));
-            console.log("Flashcards");
-          }).catch((err) => console.error("Flashcard Error:", err))
-        );
-      }
       if (selectedOptions.resumen) {
-        requests.push(
-          axios.get(`${backendBaseURL}/createSummary`, { params: { path: filePath, id: userId } }).then((res) => {
-            sessionStorage.setItem("summaryData", res.data.summary);
-          }).catch((err) => console.error("Summary Error:", err))
-        );
+        //para usuarios premium
+        if (isPremium) {
+          requests.push(
+            axios.get(`${backendBaseURL}/createSummaryPremium`, {
+              params: {
+                path: filePath,
+                id: userId,
+                num: palabras, 
+                estilo: redaccion, 
+                enfoque: enfoque, 
+              },
+            }).then((res) => {
+              const summaryObject = JSON.parse(res.data.summary.trim());
+              sessionStorage.setItem("summaryData", JSON.stringify(summaryObject));              
+              console.log("Premium Summary Generated");
+            }).catch((err) => console.error("Summary Premium Error:", err))
+          );
+        } else {
+          requests.push(
+            axios.get(`${backendBaseURL}/createSummary`, {
+              params: { path: filePath, id: userId }
+            }).then((res) => {
+              sessionStorage.setItem("summaryData", JSON.stringify(res.data.summary));
+            }).catch((err) => console.error("Summary Error:", err))
+          );
+        }
+      }
+  
+      if (selectedOptions.flashcards) {
+        // para usuarios premium 
+        if (isPremium) {
+          requests.push(
+            axios.get(`${backendBaseURL}/createFlashcardsPremium`, {
+              params: {
+                path: filePath,
+                id: userId,
+                num: tarjetas, 
+                formato: formato, 
+                dificultad: dificultad, 
+              },
+            }).then((res) => {
+              sessionStorage.setItem("flashcardData", JSON.stringify(res.data.list));
+              console.log("Premium Flashcards Generated");
+            }).catch((err) => console.error("Flashcard Premium Error:", err))
+          );
+        } else {
+          requests.push(
+            axios.get(`${backendBaseURL}/createFlashcards`, {
+              params: { path: filePath, id: userId }
+            }).then((res) => {
+              sessionStorage.setItem("flashcardData", JSON.stringify(res.data.list));
+              console.log("Flashcards Generated");
+            }).catch((err) => console.error("Flashcard Error:", err))
+          );
+        }
       }
       if (selectedOptions.examenPractica) {
 
@@ -149,8 +197,7 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
             }).then((res) => {
               const listStr = res.data.list;
               let parsedList;
-              try {
-                // Trim extra spaces/newlines before parsing
+              try {       
                 parsedList = JSON.parse(listStr.trim());
                 if (Array.isArray(parsedList)) {
                   sessionStorage.setItem("examData", JSON.stringify(parsedList));
@@ -240,6 +287,30 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
                       }}>Prueba
                     </button>
                   </div>
+                  
+                  
+                  {showConfigurations && (
+                    <>
+                      <hr className="mt-4 mb-3"/>
+
+                      {/* Display selected configurations */}
+                      <div className="mx-3 text-muted" style={{ fontSize: "0.85rem" }}>
+                        {selectedOptions.flashcards && (
+                          <p><strong>Flashcards:</strong> {tarjetas} tarjetas, Formato: {formato}, Dificultad: {dificultad}</p>
+                        )}
+                        
+                        {selectedOptions.resumen && (
+                          <p><strong>Resumen:</strong> {palabras} palabras, Redacción: {redaccion}, Enfoque: {enfoque}</p>
+                        )}
+                        
+                        {selectedOptions.examenPractica && (
+                          <p><strong>Prueba:</strong> {numeroPreguntas} preguntas, Dificultad: {Ndificultad}, 
+                            Tipos: {seleccionadas.length > 0 ? seleccionadas.join(", ") : "Ninguno seleccionado"}
+                          </p>
+                        )}
+                      </div>
+                    </>
+                  )}
                 </>
               )}
               {uploading && (
@@ -312,7 +383,11 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
             <button
               type="button"
               className="btn btn-secondary btn-outline2"
-              onClick={() => setShowModalF(false)}
+              onClick={() => { 
+                setShowModalF(false); 
+                handleModalClose();
+              }}
+              
             >
               Aceptar
             </button>
@@ -370,7 +445,9 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
             <button
               type="button"
               className="btn btn-secondary btn-outline2"
-              onClick={() => setShowModalR(false)}
+              onClick={() => {setShowModalR(false);
+                handleModalClose();}
+              }
             >
               Aceptar
             </button>
@@ -442,7 +519,7 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
             <button
               type="button"
               className="btn btn-secondary btn-outline2"
-              onClick={() => setShowModalE(false)}
+              onClick={() => {setShowModalE(false); handleModalClose();}}
             >
               Aceptar
             </button>
