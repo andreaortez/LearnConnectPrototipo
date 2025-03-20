@@ -21,11 +21,11 @@ export default function HomePage() {
     return (
         <div className="container-fluid m-0 p-0">
             <div className="row m-0 p-0">
-                <aside className="col-md-3 col-lg-3 sticky-top">
+                <aside className="col-lg-3 sticky-top d-lg-block d-md-none">
                     <SideBar />
                 </aside>
-                <main id="main" className="col-md-9 ms-sm-auto col-lg-9" style={{ minHeight: '100vh', margin: 0, padding: 0 }}>
-                    <nav id="home-header" className="navbar navbar-light bg-light d-md-none">
+                <main id="main" className="col-12 col-lg-9 ms-sm-auto" style={{ minHeight: '100vh', margin: 0, padding: 0 }}>
+                    <nav id="home-header" className="navbar navbar-light bg-light d-lg-none">
                         <div className="container-fluid">
                             <button className="navbar-toggler"
                                 type="button"
@@ -53,7 +53,7 @@ export default function HomePage() {
                     </section>
                     <section id="actividades" className="pt-6 ibm-plex-sans-pSans">
                         <h2>Actividades</h2>
-                        <p className="p-1">Sube tus archivos o anotaciones para estudiar con nuestros juegos, exámenes y flashcards
+                        <p className="p-1">Sube tus archivos o anotaciones para estudiar con nuestros resúmenes, exámenes y flashcards
                             generadas con IA!
                         </p>
                         <button className="btn btn-act" onClick={() => setShowUploadModal(true)}>Subir anotaciones</button>

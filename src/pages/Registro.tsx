@@ -23,7 +23,7 @@ export default function SignUp() {
             .then(response => {
                 if (response.data.mensaje === `Usuario "${nombre} ${apellido}" registrado con éxito`) {
                     localStorage.setItem('user_id', response.data.user_id);
-                    router.push('/HomePage');
+                    router.push('/IniciarSesion');
                 }
             })
             .catch((error) => {
