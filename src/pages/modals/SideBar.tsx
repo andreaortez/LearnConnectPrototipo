@@ -35,17 +35,17 @@ const Sidebar: React.FC = () => {
             <a className="nav-link text-dark" style={{ cursor: "pointer" }} onClick={() => router.push("/HomePage")}>Inicio</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link text-dark" href="#actividades">Actividades</a>
+            <a className="nav-link text-dark" href="#actividades" onClick={() => router.push("/HomePage")}>Actividades</a>
           </li>
-          <li className="nav-item">
+          {/*<li className="nav-item">
             <a className="nav-link text-dark" href="#perfil">Mi Perfil</a>
-          </li>
+          </li>*/}
           <li className="nav-item">
             <a className="nav-link text-dark" style={{ cursor: "pointer" }} onClick={() => router.push("/Recursos")}>Recursos</a>
           </li>
-          <li className="nav-item">
+          {/*<li className="nav-item">
             <a className="nav-link text-dark" href="#soporte">Soporte</a>
-          </li>
+          </li>*/}
         </ul>
       </div>
     </div >

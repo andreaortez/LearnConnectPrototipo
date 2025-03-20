@@ -10,7 +10,7 @@ export default function Home() {
         <link rel="icon" href="/images/Logo.png" />
       </Head>
       <div className="background-image d-flex justify-content-center align-items-center vh-100">
-        <div className="card text-center " style={{ width: "25rem", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)" }}>
+        <div className="card text-center w-75 w-sm-100" style={{ maxWidth: "24rem", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)" }}>
           <div className="card-body">
             <Image
               className="img-fluid mx-auto d-block"
