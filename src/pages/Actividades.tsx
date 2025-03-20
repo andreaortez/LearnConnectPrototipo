@@ -36,7 +36,11 @@ export default function Actividades() {
     router.push("/HomePage")
   }
   const [currentStep, setCurrentStep] = useState<number>(0);
-  const [content, setContent] = useState({
+  const [content, setContent] = useState<{
+    flashcards: any[] | null;
+    exam: any[] | null;
+    summary: any[] | null;
+  }>({
     flashcards: null,
     exam: null,
     summary: null,
@@ -57,13 +61,26 @@ export default function Actividades() {
     const flashcardData = sessionStorage.getItem("flashcardData");
     const summaryData = sessionStorage.getItem("summaryData");
     const examData = sessionStorage.getItem("examData");
+    let parsedExamData: any[] | null = null;
 
+    if (examData) {
+        try {
+            const parsedData = JSON.parse(examData);
+            if (Array.isArray(parsedData)) {
+                parsedExamData = parsedData;
+            } else {
+                console.error("Exam data is not an array!", parsedData);
+            }
+        } catch (error) {
+            console.error("Error parsing exam data:", error);
+        }
+    }
     
 
     setContent({
       flashcards: flashcardData ? JSON.parse(flashcardData) : null,
       summary: summaryData ? JSON.parse(summaryData) : null,
-      exam: examData ? JSON.parse(examData) : null,
+      exam: parsedExamData,
     });
 
     console.log("Selected Options:", selectedOptions);

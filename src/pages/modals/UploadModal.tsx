@@ -146,8 +146,23 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
                 multipleAnswer: tiposPreguntas.includes("Opción Múltiple"),
                 trueFalse: tiposPreguntas.includes("Verdadero/Falso"),
               },
+            }).then((res) => {
+              const listStr = res.data.list;
+              let parsedList;
+              try {
+                // Trim extra spaces/newlines before parsing
+                parsedList = JSON.parse(listStr.trim());
+                if (Array.isArray(parsedList)) {
+                  sessionStorage.setItem("examData", JSON.stringify(parsedList));
+                } else {
+                  console.error("Parsed exam data is not an array:", parsedList);
+                }
+              } catch (e) {
+                console.error("Error parsing exam data:", e, listStr);
+              }
             })
-          );
+            .catch((err) => console.error("Exam Error:", err))
+        );
         } else {
           requests.push(
             axios.get(`${backendBaseURL}/createExamen`, { params: { path: filePath, num: preguntas, id: userId } }).then((res) => {

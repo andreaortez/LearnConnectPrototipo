@@ -27,13 +27,24 @@ export default function Recursos() {
     const [exams, setExams] = useState<Exam[]>([]);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
-    const userId = localStorage.getItem("user_id");
+    const [userId, setUserId] = useState<string | null>(null);
+    const [isPremium, setIsPremium] = useState(true);
 
     useEffect(() => {
-        if (!userId) {
-            console.error("User ID not found!");
-            return;
+        if (typeof window !== "undefined") {
+            const storedUserId = localStorage.getItem("user_id");
+            if (storedUserId) {
+                setUserId(storedUserId);
+            } else {
+                console.error("User ID not found in localStorage!");
+            }
         }
+    }, []);
+
+    useEffect(() => {
+       
+        if (!userId) return; 
+        console.log("User ID:", userId);
 
         const fetchResources = async () => {
             try {
@@ -43,19 +54,25 @@ export default function Recursos() {
                     axios.get("http://localhost:3001/getExams", { params: { id: userId } })
                 ]);
 
+                console.log("Summaries Response:", summariesRes.data);
+                console.log("Flashcards Response:", flashcardsRes.data);
+                console.log("Exams Response:", examsRes.data);
+
                 setSummaries(summariesRes.data.resultado || []);
                 setFlashcards(flashcardsRes.data.resultado || []);
                 setExams(examsRes.data.resultado || []);
 
             } catch (error) {
                 console.error("Error fetching resources:", error);
-            } finally {
+            }finally {
                 setLoading(false);
             }
         };
 
         fetchResources();
-    }, []);
+    }, [userId]);
+
+    
 
     const openSummary = async (summaryID: string) => {
         if (!userId) {
@@ -84,12 +101,14 @@ export default function Recursos() {
         }
 
         try {
-            const response = await axios.get("http://localhost:3001/getExam", {
-                params: { id: userId, item_id: examID },
-            });
-            sessionStorage.setItem("exam", "true");
-            sessionStorage.setItem("examData", JSON.stringify(response.data.resultado))
-            router.push("/Actividades");
+            
+                const response = await axios.get("http://localhost:3001/getExam", {
+                    params: { id: userId, item_id: examID },
+                });
+                sessionStorage.setItem("exam", "true");
+                sessionStorage.setItem("examData", JSON.stringify(response.data.resultado))
+                router.push("/Actividades");
+        
         } catch (error) {
             console.error("Error fetching resources:", error);
         } finally {
