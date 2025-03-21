@@ -55,10 +55,10 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
       prev.includes(tipo) ? prev.filter((item) => item !== tipo) : [...prev, tipo]
     );
   };
-// para mostrar configuraciones premium a aplicar a los recursos
+  // para mostrar configuraciones premium a aplicar a los recursos
   const handleModalClose = () => {
     setShowConfigurations(true);
-  };  
+  };
 
   const toggleOption = (option: OptionKeys) => {
     setSelectedOptions((prev) => ({
@@ -130,13 +130,13 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
               params: {
                 path: filePath,
                 id: userId,
-                num: palabras, 
-                estilo: redaccion, 
-                enfoque: enfoque, 
+                num: palabras,
+                estilo: redaccion,
+                enfoque: enfoque,
               },
             }).then((res) => {
               const summaryObject = JSON.parse(res.data.summary.trim());
-              sessionStorage.setItem("summaryData", JSON.stringify(summaryObject));              
+              sessionStorage.setItem("summaryData", JSON.stringify(summaryObject));
               console.log("Premium Summary Generated");
             }).catch((err) => console.error("Summary Premium Error:", err))
           );
@@ -150,7 +150,7 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
           );
         }
       }
-  
+
       if (selectedOptions.flashcards) {
         // para usuarios premium 
         if (isPremium) {
@@ -159,9 +159,9 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
               params: {
                 path: filePath,
                 id: userId,
-                num: tarjetas, 
-                formato: formato, 
-                dificultad: dificultad, 
+                num: tarjetas,
+                formato: formato,
+                dificultad: dificultad,
               },
             }).then((res) => {
               sessionStorage.setItem("flashcardData", JSON.stringify(res.data.list));
@@ -197,7 +197,7 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
             }).then((res) => {
               const listStr = res.data.list;
               let parsedList;
-              try {       
+              try {
                 parsedList = JSON.parse(listStr.trim());
                 if (Array.isArray(parsedList)) {
                   sessionStorage.setItem("examData", JSON.stringify(parsedList));
@@ -208,8 +208,8 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
                 console.error("Error parsing exam data:", e, listStr);
               }
             })
-            .catch((err) => console.error("Exam Error:", err))
-        );
+              .catch((err) => console.error("Exam Error:", err))
+          );
         } else {
           requests.push(
             axios.get(`${backendBaseURL}/createExamen`, { params: { path: filePath, num: preguntas, id: userId } }).then((res) => {
@@ -271,40 +271,40 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
                     <button className={`btn btn-tipo m-2 ${selectedOptions.flashcards ? "btn-selected" : ""} `}
                       onClick={() => {
                         toggleOption("flashcards")
-                        {isPremium?setShowModalF(true):setShowModalF(false)}
+                        { isPremium ? setShowModalF(true) : setShowModalF(false) }
                       }}>Flashcards
                     </button>
                     <button className={`btn btn-tipo m-2 ${selectedOptions.resumen ? "btn-selected" : ""} `}
                       onClick={() => {
                         toggleOption("resumen")
-                        {isPremium?setShowModalR(true):setShowModalR(false)}
+                        { isPremium ? setShowModalR(true) : setShowModalR(false) }
                       }}>Resumen
                     </button>
                     <button className={`btn btn-tipo m-2 ${selectedOptions.examenPractica ? "btn-selected" : ""}`}
                       onClick={() => {
                         toggleOption("examenPractica");
-                        {isPremium?setShowModalE(true):setShowModalE(false)}
+                        { isPremium ? setShowModalE(true) : setShowModalE(false) }
                       }}>Prueba
                     </button>
                   </div>
-                  
-                  
+
+
                   {showConfigurations && (
                     <>
-                      <hr className="mt-4 mb-3"/>
+                      <hr className="mt-4 mb-3" />
 
                       {/* Display selected configurations */}
                       <div className="mx-3 text-muted" style={{ fontSize: "0.85rem" }}>
                         {selectedOptions.flashcards && (
                           <p><strong>Flashcards:</strong> {tarjetas} tarjetas, Formato: {formato}, Dificultad: {dificultad}</p>
                         )}
-                        
+
                         {selectedOptions.resumen && (
                           <p><strong>Resumen:</strong> {palabras} palabras, Redacción: {redaccion}, Enfoque: {enfoque}</p>
                         )}
-                        
+
                         {selectedOptions.examenPractica && (
-                          <p><strong>Prueba:</strong> {numeroPreguntas} preguntas, Dificultad: {Ndificultad}, 
+                          <p><strong>Prueba:</strong> {numeroPreguntas} preguntas, Dificultad: {Ndificultad},
                             Tipos: {seleccionadas.length > 0 ? seleccionadas.join(", ") : "Ninguno seleccionado"}
                           </p>
                         )}
@@ -361,7 +361,7 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
                   value={formato}
                   onChange={(e) => setFormato(e.target.value)}>
                   <option value="pregunta-respuesta">Pregunta-respuesta</option>
-                  <option value="término-definición">Termino definición</option>
+                  <option value="término-definición">Término-definición</option>
                 </select>
               </div>
 
@@ -383,11 +383,11 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
             <button
               type="button"
               className="btn btn-secondary btn-outline2"
-              onClick={() => { 
-                setShowModalF(false); 
+              onClick={() => {
+                setShowModalF(false);
                 handleModalClose();
               }}
-              
+
             >
               Aceptar
             </button>
@@ -445,8 +445,10 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
             <button
               type="button"
               className="btn btn-secondary btn-outline2"
-              onClick={() => {setShowModalR(false);
-                handleModalClose();}
+              onClick={() => {
+                setShowModalR(false);
+                handleModalClose();
+              }
               }
             >
               Aceptar
@@ -519,7 +521,7 @@ export default function UploadModal({ onClose, onFileUpload }: UploadModalProps)
             <button
               type="button"
               className="btn btn-secondary btn-outline2"
-              onClick={() => {setShowModalE(false); handleModalClose();}}
+              onClick={() => { setShowModalE(false); handleModalClose(); }}
             >
               Aceptar
             </button>

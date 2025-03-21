@@ -24,6 +24,7 @@ export default function Actividades() {
     summary: false,
     exam: false,
   });
+  const [recursos, setRecursos] = useState<boolean>(false);
 
   const router = useRouter();
   const VolverHomePage = () => {
@@ -35,6 +36,18 @@ export default function Actividades() {
     sessionStorage.removeItem("exam");
     router.push("/HomePage")
   }
+
+  const VolverRecursos = () => {
+    sessionStorage.removeItem("flashcardData");
+    sessionStorage.removeItem("summaryData");
+    sessionStorage.removeItem("examData");
+    sessionStorage.removeItem("flashcard");
+    sessionStorage.removeItem("summary");
+    sessionStorage.removeItem("exam");
+    sessionStorage.removeItem("recursos");
+    router.push("/Recursos")
+  }
+
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [content, setContent] = useState<{
     flashcards: any[] | null;
@@ -51,6 +64,7 @@ export default function Actividades() {
     const summaryStorage = sessionStorage.getItem("summary") === "true" ? true : false;
     const examStorage = sessionStorage.getItem("exam") === "true" ? true : false;
 
+    setRecursos(sessionStorage.getItem("flashcard") === "true" ? true : false)
 
     setSelectedOptions({
       flashcards: flashcardStorage,
@@ -64,18 +78,18 @@ export default function Actividades() {
     let parsedExamData: any[] | null = null;
 
     if (examData) {
-        try {
-            const parsedData = JSON.parse(examData);
-            if (Array.isArray(parsedData)) {
-                parsedExamData = parsedData;
-            } else {
-                console.error("Exam data is not an array!", parsedData);
-            }
-        } catch (error) {
-            console.error("Error parsing exam data:", error);
+      try {
+        const parsedData = JSON.parse(examData);
+        if (Array.isArray(parsedData)) {
+          parsedExamData = parsedData;
+        } else {
+          console.error("Exam data is not an array!", parsedData);
         }
+      } catch (error) {
+        console.error("Error parsing exam data:", error);
+      }
     }
-    
+
 
     setContent({
       flashcards: flashcardData ? JSON.parse(flashcardData) : null,
@@ -111,22 +125,56 @@ export default function Actividades() {
   return (
     <>
       <div id="actividades" className="d-flex flex-column justify-content-center align-items-center vh-100">
-        <h1>Actividades Generadas</h1>
 
-        {currentModal ? (
-          <currentModal.component
-            data={currentModal.data}
-            onClose={() => setCurrentStep((prevStep) => prevStep + 1)}
-          />
+
+        {recursos ? (
+          <>
+            <h1>Actividad Completada</h1>
+
+            {currentModal ? (
+              <currentModal.component
+                data={currentModal.data}
+                onClose={() => setCurrentStep((prevStep) => prevStep + 1)}
+              />
+            ) : (
+              <h2>¡Puedes seguir explorando las actividades!</h2>
+
+            )}
+
+            <button
+              className="btn btn-verde fs-5 mt-5 p-3 rounded shadow btn-outline d-flex align-items-center justify-content-center"
+              onClick={VolverRecursos}
+            >
+              <img src="/images/educativo.png" alt="Recursos" className="me-2" width="30" height="24" />
+              Mis Recursos
+            </button>
+          </>
         ) : (
-          <h2>¡Has completado todas las actividades!</h2>
-        )}
+          <>
+            <h1>Actividades Generadas</h1>
 
-        <button className="btn btn-verde fs-5 mt-5 p-3 rounded shadow btn-outline d-flex align-items-center justify-content-center" onClick={VolverHomePage}>
-          <img src="/images/hogar.png" alt="Inicio" className="me-2" width="30" height="24" />
-          Página de Inicio
-        </button>
-      </div>
+            {currentModal ? (
+              <currentModal.component
+                data={currentModal.data}
+                onClose={() => setCurrentStep((prevStep) => prevStep + 1)}
+              />
+            ) : (
+              <h2>¡Has completado todas las actividades!</h2>
+
+            )}
+
+            <button
+              className="btn btn-verde fs-5 mt-5 p-3 rounded shadow btn-outline d-flex align-items-center justify-content-center"
+              onClick={VolverHomePage}
+            >
+              <img src="/images/hogar.png" alt="Inicio" className="me-2" width="30" height="24" />
+              Página de Inicio
+            </button>
+          </>
+        )
+        }
+
+      </div >
     </>
   );
 };
