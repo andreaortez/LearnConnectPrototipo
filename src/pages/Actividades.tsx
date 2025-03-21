@@ -64,7 +64,7 @@ export default function Actividades() {
     const summaryStorage = sessionStorage.getItem("summary") === "true" ? true : false;
     const examStorage = sessionStorage.getItem("exam") === "true" ? true : false;
 
-    setRecursos(sessionStorage.getItem("flashcard") === "true" ? true : false)
+    setRecursos(sessionStorage.getItem("recursos") === "true" ? true : false)
 
     setSelectedOptions({
       flashcards: flashcardStorage,
