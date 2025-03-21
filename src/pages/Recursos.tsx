@@ -49,8 +49,8 @@ export default function Recursos() {
     }, []);
 
     useEffect(() => {
-       
-        if (!userId) return; 
+
+        if (!userId) return;
         console.log("User ID:", userId);
 
         const fetchResources = async () => {
@@ -71,7 +71,7 @@ export default function Recursos() {
 
             } catch (error) {
                 console.error("Error fetching resources:", error);
-            }finally {
+            } finally {
                 setLoading(false);
             }
         };
@@ -79,7 +79,7 @@ export default function Recursos() {
         fetchResources();
     }, [userId]);
 
-    
+
 
     const openSummary = async (summaryID: string) => {
         if (!userId) {
@@ -92,7 +92,8 @@ export default function Recursos() {
                 params: { id: userId, item_id: summaryID },
             });
             sessionStorage.setItem("summary", "true");
-            sessionStorage.setItem("summaryData", JSON.stringify(response.data.resultado[0]))
+            sessionStorage.setItem("summaryData", JSON.stringify(response.data.resultado[0]));
+            sessionStorage.setItem("recursos", "true");
             router.push("/Actividades");
         } catch (error) {
             console.error("Error fetching resources:", error);
@@ -108,14 +109,15 @@ export default function Recursos() {
         }
 
         try {
-            
-                const response = await axios.get("http://localhost:3001/getExam", {
-                    params: { id: userId, item_id: examID },
-                });
-                sessionStorage.setItem("exam", "true");
-                sessionStorage.setItem("examData", JSON.stringify(response.data.resultado))
-                router.push("/Actividades");
-        
+
+            const response = await axios.get("http://localhost:3001/getExam", {
+                params: { id: userId, item_id: examID },
+            });
+            sessionStorage.setItem("exam", "true");
+            sessionStorage.setItem("examData", JSON.stringify(response.data.resultado));
+            sessionStorage.setItem("recursos", "true");
+            router.push("/Actividades");
+
         } catch (error) {
             console.error("Error fetching resources:", error);
         } finally {
@@ -134,7 +136,8 @@ export default function Recursos() {
                 params: { id: userId, item_id: examID },
             });
             sessionStorage.setItem("flashcard", "true");
-            sessionStorage.setItem("flashcardData", JSON.stringify(response.data.resultado))
+            sessionStorage.setItem("flashcardData", JSON.stringify(response.data.resultado));
+            sessionStorage.setItem("recursos", "true");
             router.push("/Actividades");
         } catch (error) {
             console.error("Error fetching resources:", error);
@@ -165,7 +168,7 @@ export default function Recursos() {
                     </div>
                 </nav>
                 <main id="mainR" className="col-12 col-lg-9 ms-sm-auto 100vw" style={{ minHeight: '100vh' }}>
-                
+
                     <section id="recursosNav" className="py-4 px-4 rounded bg-teal-500 text-white shadow-sm">
                         <h2 className="font-bold mt-2">Mis Recursos</h2>
                         <p>Lista de recursos guardados aquí.</p>
@@ -179,61 +182,61 @@ export default function Recursos() {
                                 <h5 className="text-teal-700 font-bold border-bottom pb-2">📄 Flashcards</h5>
                                 <div className="resource-grid">
                                     {flashcards.length > 0 ? (
-                                    flashcards.map((item) => (
-                                        <div
-                                        key={item._id}
-                                        className="resource-item"
-                                        onClick={() => openFlashcard(item._id)}
-                                        >
-                                        <Image src="/images/flashcard.png" alt="flashcard" width={60} height={60} />
-                                        <p className="resource-title">Flashcard Set</p>
-                                        </div>
-                                    ))
+                                        flashcards.map((item) => (
+                                            <div
+                                                key={item._id}
+                                                className="resource-item"
+                                                onClick={() => openFlashcard(item._id)}
+                                            >
+                                                <Image src="/images/flashcard.png" alt="flashcard" width={60} height={60} />
+                                                <p className="resource-title">Flashcard Set</p>
+                                            </div>
+                                        ))
                                     ) : (
-                                    <p className="text-muted text-center w-100">No hay flashcards guardadas.</p>
+                                        <p className="text-muted text-center w-100">No hay flashcards guardadas.</p>
                                     )}
                                 </div>
-                                </section>
+                            </section>
 
-                                <section className="mt-4 p-3 bg-white rounded shadow-sm">
+                            <section className="mt-4 p-3 bg-white rounded shadow-sm">
                                 <h5 className="text-teal-700 font-bold border-bottom pb-2">📑 Resúmenes</h5>
                                 <div className="resource-grid">
                                     {summaries.length > 0 ? (
-                                    summaries.map((item) => (
-                                        <div
-                                        key={item._id}
-                                        className="resource-item"
-                                        onClick={() => openSummary(item._id)}
-                                        >
-                                        <Image src="/images/summary.png" alt="summary" width={60} height={60} />
-                                        <p className="resource-title">{item.title}</p>
-                                        </div>
-                                    ))
+                                        summaries.map((item) => (
+                                            <div
+                                                key={item._id}
+                                                className="resource-item"
+                                                onClick={() => openSummary(item._id)}
+                                            >
+                                                <Image src="/images/summary.png" alt="summary" width={60} height={60} />
+                                                <p className="resource-title">{item.title}</p>
+                                            </div>
+                                        ))
                                     ) : (
-                                    <p className="text-muted text-center w-100">No hay resúmenes guardados.</p>
+                                        <p className="text-muted text-center w-100">No hay resúmenes guardados.</p>
                                     )}
                                 </div>
-                                </section>
+                            </section>
 
-                                <section className="mt-4 p-3 bg-white rounded shadow-sm">
+                            <section className="mt-4 p-3 bg-white rounded shadow-sm">
                                 <h5 className="text-teal-700 font-bold border-bottom pb-2">📝 Exámenes</h5>
                                 <div className="resource-grid">
                                     {exams.length > 0 ? (
-                                    exams.map((item) => (
-                                        <div
-                                        key={item._id}
-                                        className="resource-item"
-                                        onClick={() => openExam(item._id)}
-                                        >
-                                        <Image src="/images/exam.png" alt="exam" width={60} height={60} />
-                                        <p className="resource-title">{item.title}</p>
-                                        </div>
-                                    ))
+                                        exams.map((item) => (
+                                            <div
+                                                key={item._id}
+                                                className="resource-item"
+                                                onClick={() => openExam(item._id)}
+                                            >
+                                                <Image src="/images/exam.png" alt="exam" width={60} height={60} />
+                                                <p className="resource-title">{item.title}</p>
+                                            </div>
+                                        ))
                                     ) : (
-                                    <p className="text-muted text-center w-100">No hay exámenes guardados.</p>
+                                        <p className="text-muted text-center w-100">No hay exámenes guardados.</p>
                                     )}
                                 </div>
-                                </section>
+                            </section>
 
                         </>
                     )}
@@ -242,4 +245,3 @@ export default function Recursos() {
         </div>
     );
 }
-

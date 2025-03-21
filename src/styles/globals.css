@@ -52,13 +52,14 @@ a {
     flex: 0 0 auto;
     width: 64% !important;
   }
- 
+
   #sidebarMenu {
     width: 35%;
     position: fixed !important;
     transform: none !important;
     visibility: visible !important;
   }
+
   .resource-grid {
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   }
@@ -69,11 +70,11 @@ a {
   }
 
   .resource-item img {
-    width: 50px; 
+    width: 50px;
   }
 
   .resource-title {
-    font-size: 0.75rem; 
+    font-size: 0.75rem;
   }
 }
 
@@ -81,6 +82,18 @@ a {
   #mainR .col-lg-9 {
     flex: 0 0 auto;
     width: 65% !important;
+  }
+}
+
+@media (min-width: 992px) and (min-height:1300px) {
+  #mainR .col-lg-9 {
+    flex: 0 0 auto;
+    width: 65% !important;
+  }
+
+  #mainR {
+    flex: 0 0 auto;
+    width: 69% !important;
   }
 }
 
